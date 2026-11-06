@@ -43,9 +43,7 @@ header{
   font-size:12px;
   font-weight:bold;
 }
-.search-area{
-  padding:5px 5% 18px;
-}
+.search-area{padding:5px 5% 18px}
 .search-area input{
   width:100%;
   background:#171e1a;
@@ -185,6 +183,12 @@ header{
   text-align:center;
   padding:40px 10px;
 }
+.status{
+  color:var(--muted);
+  text-align:center;
+  padding:25px 10px;
+  font-size:13px;
+}
 footer{
   text-align:center;
   padding:35px 15px 110px;
@@ -224,13 +228,23 @@ footer{
   align-items:center;
   justify-content:center;
   padding:20px;
+  overflow-y:auto;
 }
 .modal-box{
   width:100%;
   max-width:420px;
+  max-height:85vh;
+  overflow-y:auto;
   background:#17201a;
   padding:25px;
   border-radius:18px;
+}
+.modal-box img{
+  width:100%;
+  max-height:230px;
+  object-fit:cover;
+  border-radius:12px;
+  margin-bottom:18px;
 }
 .modal-box h2{margin-bottom:12px}
 .modal-box p{
@@ -245,6 +259,7 @@ footer{
   border-radius:8px;
   background:var(--green);
   font-weight:bold;
+  cursor:pointer;
 }
 @media(max-width:650px){
   header{padding:19px 5%}
@@ -268,16 +283,16 @@ footer{
 </header>
 
 <div class="search-area">
-  <input type="search" id="search" placeholder="Search movies..." oninput="filterMovies()">
+  <input type="search" id="search" placeholder="Search movies...">
 </div>
 
 <div class="categories">
-  <button class="active" onclick="setCategory('All',this)">All</button>
-  <button onclick="setCategory('Action',this)">Action</button>
-  <button onclick="setCategory('Drama',this)">Drama</button>
-  <button onclick="setCategory('Thriller',this)">Thriller</button>
-  <button onclick="setCategory('Sci-Fi',this)">Sci-Fi</button>
-  <button onclick="setCategory('Adventure',this)">Adventure</button>
+  <button class="active" data-category="All">All</button>
+  <button data-category="Action">Action</button>
+  <button data-category="Drama">Drama</button>
+  <button data-category="Thriller">Thriller</button>
+  <button data-category="Sci-Fi">Sci-Fi</button>
+  <button data-category="Adventure">Adventure</button>
 </div>
 
 <section class="hero">
@@ -297,76 +312,8 @@ footer{
     <span>EXPLORE ALL ↗</span>
   </div>
 
-  <div class="movie-grid" id="movieGrid">
-
-    <div class="movie-card" data-category="Action" data-name="The Dark Knight">
-      <div class="poster">
-        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600" alt="Cinema">
-        <span class="rating">★ 9.0</span>
-      </div>
-      <div class="movie-info">
-        <h3>The Dark Knight</h3>
-        <p>2008 · Action</p>
-      </div>
-    </div>
-
-    <div class="movie-card" data-category="Sci-Fi" data-name="Interstellar">
-      <div class="poster">
-        <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=600" alt="Space">
-        <span class="rating">★ 8.7</span>
-      </div>
-      <div class="movie-info">
-        <h3>Interstellar</h3>
-        <p>2014 · Sci-Fi</p>
-      </div>
-    </div>
-
-    <div class="movie-card" data-category="Thriller" data-name="Inception">
-      <div class="poster">
-        <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=600" alt="Night sky">
-        <span class="rating">★ 8.8</span>
-      </div>
-      <div class="movie-info">
-        <h3>Inception</h3>
-        <p>2010 · Thriller</p>
-      </div>
-    </div>
-
-    <div class="movie-card" data-category="Drama" data-name="The Shawshank Redemption">
-      <div class="poster">
-        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600" alt="Cinema screen">
-        <span class="rating">★ 9.3</span>
-      </div>
-      <div class="movie-info">
-        <h3>The Shawshank Redemption</h3>
-        <p>1994 · Drama</p>
-      </div>
-    </div>
-
-    <div class="movie-card" data-category="Adventure" data-name="The Lost World">
-      <div class="poster">
-        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=600" alt="Forest">
-        <span class="rating">★ 8.1</span>
-      </div>
-      <div class="movie-info">
-        <h3>The Lost World</h3>
-        <p>2024 · Adventure</p>
-      </div>
-    </div>
-
-    <div class="movie-card" data-category="Action" data-name="The Last Mission">
-      <div class="poster">
-        <img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=600" alt="City">
-        <span class="rating">★ 8.2</span>
-      </div>
-      <div class="movie-info">
-        <h3>The Last Mission</h3>
-        <p>2025 · Action</p>
-      </div>
-    </div>
-
-  </div>
-
+  <div class="movie-grid" id="movieGrid"></div>
+  <div class="status" id="status">Loading movies...</div>
   <div class="empty" id="empty">No movies found.</div>
 </section>
 
@@ -374,6 +321,9 @@ footer{
   <div class="logo">MOVIE<span>CANVAS</span></div>
   <p style="margin-top:12px">Discover. Explore. Experience Cinema.</p>
   <p style="margin-top:10px">© 2026 MovieCanvas</p>
+  <p style="margin-top:10px">
+    This product uses the TMDB API but is not endorsed or certified by TMDB.
+  </p>
 </footer>
 
 <nav class="bottom-nav">
@@ -385,53 +335,236 @@ footer{
 
 <div class="modal" id="movieModal" onclick="closeModal(event)">
   <div class="modal-box">
+    <img id="modalPoster" src="" alt="Movie poster">
     <h2 id="modalTitle">Movie</h2>
-    <p id="modalText">Movie details</p>
+    <p id="modalText">Loading movie details...</p>
     <button onclick="document.getElementById('movieModal').style.display='none'">Close</button>
   </div>
 </div>
 
 <script>
+const API_BASE = "https://moviecanvas-api.alamin-7ah.workers.dev";
+const IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
+
+const genres = {
+  "Action": 28,
+  "Drama": 18,
+  "Thriller": 53,
+  "Sci-Fi": 878,
+  "Adventure": 12
+};
+
 let selectedCategory = "All";
+let searchTimer;
 
-function setCategory(category, button){
-  selectedCategory = category;
-  document.querySelectorAll(".categories button").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
-  filterMovies();
+const grid = document.getElementById("movieGrid");
+const statusBox = document.getElementById("status");
+const emptyBox = document.getElementById("empty");
+
+async function apiRequest(path){
+  const response = await fetch(API_BASE + path);
+
+  if(!response.ok){
+    throw new Error("API request failed: " + response.status);
+  }
+
+  return await response.json();
 }
 
-function filterMovies(){
-  const query = document.getElementById("search").value.toLowerCase();
-  const cards = document.querySelectorAll(".movie-card");
-  let count = 0;
-
-  cards.forEach(card=>{
-    const name = card.dataset.name.toLowerCase();
-    const category = card.dataset.category;
-    const matchesName = name.includes(query);
-    const matchesCategory = selectedCategory === "All" || category === selectedCategory;
-    card.style.display = matchesName && matchesCategory ? "" : "none";
-    if(matchesName && matchesCategory) count++;
-  });
-
-  document.getElementById("empty").style.display = count ? "none" : "block";
+function showStatus(message){
+  statusBox.textContent = message;
+  statusBox.style.display = "block";
 }
 
-document.querySelectorAll(".movie-card").forEach(card=>{
-  card.addEventListener("click",()=>{
-    document.getElementById("modalTitle").textContent = card.dataset.name;
-    document.getElementById("modalText").textContent =
-      "Explore information, reviews and official trailers for " + card.dataset.name + ".";
-    document.getElementById("movieModal").style.display = "flex";
+function movieGenre(movie){
+  const genreNames = Object.entries(genres);
+  const found = genreNames.find(([name,id]) =>
+    (movie.genre_ids || []).includes(id)
+  );
+  return found ? found[0] : "Movie";
+}
+
+function renderMovies(movies){
+  grid.innerHTML = "";
+  emptyBox.style.display = "none";
+
+  if(!movies || movies.length === 0){
+    statusBox.style.display = "none";
+    emptyBox.style.display = "block";
+    return;
+  }
+
+  statusBox.style.display = "none";
+
+  movies.forEach(movie => {
+    const title = movie.title || movie.name || "Untitled";
+    const year = movie.release_date
+      ? movie.release_date.slice(0,4)
+      : "Unknown";
+    const rating = Number(movie.vote_average || 0).toFixed(1);
+    const poster = movie.poster_path
+      ? IMAGE_BASE + movie.poster_path
+      : "";
+
+    const card = document.createElement("div");
+    card.className = "movie-card";
+
+    const posterBox = document.createElement("div");
+    posterBox.className = "poster";
+
+    const image = document.createElement("img");
+    image.alt = title;
+    image.loading = "lazy";
+    image.src = poster || "https://placehold.co/500x750/202c25/a3ff62?text=No+Poster";
+
+    const ratingBox = document.createElement("span");
+    ratingBox.className = "rating";
+    ratingBox.textContent = "★ " + rating;
+
+    posterBox.appendChild(image);
+    posterBox.appendChild(ratingBox);
+
+    const info = document.createElement("div");
+    info.className = "movie-info";
+
+    const heading = document.createElement("h3");
+    heading.textContent = title;
+
+    const description = document.createElement("p");
+    description.textContent = year + " · " + movieGenre(movie);
+
+    info.appendChild(heading);
+    info.appendChild(description);
+
+    card.appendChild(posterBox);
+    card.appendChild(info);
+
+    card.addEventListener("click", () => openMovie(movie.id));
+
+    grid.appendChild(card);
   });
-});
+}
+
+async function loadMovies(){
+  const query = document.getElementById("search").value.trim();
+
+  showStatus("Loading movies...");
+
+  try{
+    let data;
+
+    if(query){
+      data = await apiRequest(
+        "/search/movie?query=" + encodeURIComponent(query) +
+        "&language=en-US&page=1"
+      );
+
+      let movies = data.results || [];
+
+      if(selectedCategory !== "All"){
+        const genreId = genres[selectedCategory];
+        movies = movies.filter(movie =>
+          (movie.genre_ids || []).includes(genreId)
+        );
+      }
+
+      renderMovies(movies);
+      return;
+    }
+
+    if(selectedCategory === "All"){
+      data = await apiRequest(
+        "/trending/movie/week?language=en-US&page=1"
+      );
+    }else{
+      const genreId = genres[selectedCategory];
+
+      data = await apiRequest(
+        "/discover/movie?with_genres=" + genreId +
+        "&sort_by=popularity.desc&language=en-US&page=1"
+      );
+    }
+
+    renderMovies(data.results || []);
+
+  }catch(error){
+    console.error(error);
+    grid.innerHTML = "";
+    showStatus("Unable to load movies. Please refresh and try again.");
+  }
+}
+
+async function openMovie(id){
+  const modal = document.getElementById("movieModal");
+  const titleBox = document.getElementById("modalTitle");
+  const textBox = document.getElementById("modalText");
+  const posterBox = document.getElementById("modalPoster");
+
+  modal.style.display = "flex";
+  titleBox.textContent = "Loading...";
+  textBox.textContent = "Please wait while we load movie details.";
+  posterBox.style.display = "none";
+
+  try{
+    const movie = await apiRequest("/movie/" + id + "?language=en-US");
+
+    titleBox.textContent = movie.title || "Movie";
+
+    posterBox.src = movie.backdrop_path
+      ? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
+      : movie.poster_path
+      ? IMAGE_BASE + movie.poster_path
+      : "";
+
+    posterBox.style.display = posterBox.src ? "block" : "none";
+
+    const genreList = (movie.genres || [])
+      .map(genre => genre.name)
+      .join(", ");
+
+    const release = movie.release_date || "Unknown";
+    const rating = Number(movie.vote_average || 0).toFixed(1);
+    const overview = movie.overview || "No overview available.";
+
+    textBox.textContent =
+      "Release: " + release +
+      "\nRating: ★ " + rating +
+      "\nGenres: " + (genreList || "Unknown") +
+      "\n\n" + overview;
+
+    textBox.style.whiteSpace = "pre-line";
+
+  }catch(error){
+    console.error(error);
+    titleBox.textContent = "Movie Details";
+    textBox.textContent = "Unable to load movie details. Please try again.";
+  }
+}
 
 function closeModal(event){
   if(event.target.id === "movieModal"){
     event.target.style.display = "none";
   }
 }
+
+document.querySelectorAll(".categories button").forEach(button => {
+  button.addEventListener("click", () => {
+    selectedCategory = button.dataset.category;
+
+    document.querySelectorAll(".categories button")
+      .forEach(item => item.classList.remove("active"));
+
+    button.classList.add("active");
+    loadMovies();
+  });
+});
+
+document.getElementById("search").addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(loadMovies, 450);
+});
+
+loadMovies();
 </script>
 
 </body>
