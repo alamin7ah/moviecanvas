@@ -261,13 +261,32 @@ footer{
   font-weight:bold;
   cursor:pointer;
 }
+
+/* MOBILE: FOUR MOVIES PER ROW */
 @media(max-width:650px){
   header{padding:19px 5%}
-  .movie-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-  .poster{height:230px}
+  .movie-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:8px;
+  }
+  .poster{
+    height:150px;
+    border-radius:9px;
+  }
+  .rating{
+    top:5px;
+    left:4px;
+    padding:4px 5px;
+    font-size:9px;
+  }
+  .movie-info{padding:8px 2px}
+  .movie-info h3{font-size:11px}
+  .movie-info p{font-size:10px}
   .hero{min-height:300px}
   .hero-content{padding:22px}
 }
+
+/* DESKTOP */
 @media(min-width:1000px){
   .movie-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
   .poster{height:320px}
