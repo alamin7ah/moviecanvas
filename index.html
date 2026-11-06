@@ -7,11 +7,12 @@
 <title>MovieCanvas</title>
 
 <style>
-:root {
+:root{
   --bg:#080b0a;
   --panel:#111715;
   --card:#151d19;
   --green:#20d68a;
+  --darkgreen:#153d2c;
   --muted:#8b9891;
   --white:#f3f7f4;
 }
@@ -23,123 +24,187 @@ body{
   padding-bottom:85px;
 }
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:17px 16px;
   background:#0b100e;
+  padding:17px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   position:sticky;
   top:0;
-  z-index:10;
-  border-bottom:1px solid #1b2922;
+  z-index:20;
+  border-bottom:1px solid #203329;
 }
-.logo{font-size:23px;font-weight:800}
+.logo{font-size:25px;font-weight:900}
 .logo span{color:var(--green)}
 .vip{
   background:#153d2c;
   color:var(--green);
-  padding:8px 12px;
+  padding:9px 12px;
   border-radius:20px;
   font-size:11px;
   font-weight:bold;
 }
-.container{padding:16px}
+.container{padding:13px}
+.top-links{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  flex-wrap:wrap;
+  margin:8px 0 15px;
+}
+.top-links a{
+  text-decoration:none;
+  color:white;
+  background:#252e29;
+  padding:9px 14px;
+  border-radius:9px;
+  font-size:12px;
+  font-weight:bold;
+}
+.top-links a:first-child{background:#176b49}
 .hero{
-  min-height:190px;
-  border-radius:17px;
-  padding:22px;
+  min-height:170px;
+  border-radius:14px;
+  padding:20px;
   display:flex;
   flex-direction:column;
   justify-content:end;
   background:
-  linear-gradient(0deg,rgba(0,0,0,.9),transparent),
-  url("https://image.tmdb.org/t/p/w780/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg")
-  center/cover;
-  margin-bottom:20px;
+    linear-gradient(0deg,#000e,transparent),
+    url("https://image.tmdb.org/t/p/w780/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg")
+    center/cover;
+  margin-bottom:16px;
 }
 .hero small{color:var(--green);font-weight:bold}
 .hero h1{font-size:25px;margin:8px 0}
 .hero p{font-size:12px;color:#ddd}
 .section-title{
-  font-size:17px;
+  font-size:18px;
   font-weight:bold;
-  margin:20px 0 12px;
+  margin:22px 0 12px;
 }
 .section-title span{color:var(--green)}
-.search-box{
-  display:flex;
-  gap:8px;
-  margin:14px 0;
-}
-.search-box input{
-  width:100%;
-  background:var(--panel);
-  border:1px solid #26352d;
-  border-radius:11px;
-  padding:13px;
-  color:white;
-  outline:none;
-}
-.search-box button{
-  background:var(--green);
-  border:0;
-  border-radius:10px;
-  padding:0 16px;
-  font-weight:bold;
-}
 .filter-label{
   color:var(--muted);
   font-size:11px;
+  font-weight:bold;
   margin:15px 0 9px;
   text-transform:uppercase;
   letter-spacing:1px;
 }
-.filter-row{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding-bottom:7px;
-  scrollbar-width:none;
+.filter-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:7px;
 }
-.filter-row::-webkit-scrollbar{display:none}
 .chip{
-  flex-shrink:0;
-  padding:9px 13px;
-  border:1px solid #26352d;
-  border-radius:20px;
-  color:#c4d0c9;
-  background:var(--panel);
-  font-size:12px;
+  border:1px solid #26372e;
+  background:#17211b;
+  color:#dce7df;
+  border-radius:8px;
+  min-height:39px;
+  padding:8px 4px;
+  font-size:11px;
+  font-weight:bold;
   cursor:pointer;
+  overflow:hidden;
 }
 .chip.active{
   background:var(--green);
-  border-color:var(--green);
   color:#06130c;
+  border-color:var(--green);
+}
+.search-box{
+  display:flex;
+  margin:19px 0 15px;
+  border:2px solid var(--green);
+  border-radius:11px;
+  overflow:hidden;
+}
+.search-box input{
+  width:100%;
+  min-width:0;
+  background:#17211b;
+  color:white;
+  border:0;
+  outline:none;
+  padding:16px 12px;
+  font-size:15px;
+}
+.search-box button{
+  background:var(--green);
+  color:#06130c;
+  border:0;
+  padding:0 19px;
+  font-size:20px;
   font-weight:bold;
 }
-.genre-select{
-  width:100%;
-  background:var(--panel);
+.category-bars{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin:17px 0 20px;
+}
+.category-bar{
+  border:0;
+  border-radius:9px;
+  min-height:43px;
+  padding:9px 7px;
   color:white;
-  border:1px solid #26352d;
-  border-radius:10px;
-  padding:13px;
-  outline:none;
-  margin-top:8px;
+  font-weight:bold;
+  font-size:12px;
+  cursor:pointer;
+  background:#176b49;
+}
+.category-bar:nth-child(2){background:#285a9e}
+.category-bar:nth-child(3){background:#a56a13}
+.category-bar:nth-child(4){background:#6550a5}
+.category-bar:nth-child(5){background:#147b70}
+.category-bar:nth-child(6){background:#8b3e91}
+.notice{
+  margin:22px 4px;
+  background:#17221c;
+  border:1px solid #214d38;
+  border-left:4px solid var(--green);
+  border-radius:13px;
+  padding:17px 12px;
+  text-align:center;
+  font-weight:bold;
+  font-size:13px;
+  line-height:1.6;
+}
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  border-bottom:2px solid var(--green);
+  padding-bottom:12px;
+  margin:20px 0 15px;
+}
+.section-head .section-title{margin:0}
+.head-actions{display:flex;gap:7px}
+.head-actions button{
+  background:#17211b;
+  color:white;
+  border:1px solid #26372e;
+  border-radius:8px;
+  padding:9px 12px;
+  font-size:13px;
 }
 .movie-grid{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:12px 9px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:17px 12px;
 }
 .movie-card{min-width:0;position:relative}
 .poster-wrap{
   position:relative;
   overflow:hidden;
-  border-radius:10px;
+  border-radius:9px;
   background:#17221c;
   aspect-ratio:2/3;
+  cursor:pointer;
 }
 .poster{
   width:100%;
@@ -147,31 +212,21 @@ header{
   object-fit:cover;
   display:block;
 }
-.poster-placeholder{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#718078;
-  font-size:12px;
-  text-align:center;
-  padding:8px;
-}
 .rating{
   position:absolute;
-  top:6px;
-  left:6px;
-  background:#07110cdd;
+  top:7px;
+  left:7px;
+  background:#07110ce8;
   color:#ffd76a;
+  padding:5px 7px;
+  border-radius:5px;
   font-size:10px;
-  padding:5px 6px;
-  border-radius:6px;
+  font-weight:bold;
 }
 .card-actions{
   position:absolute;
-  bottom:6px;
   right:6px;
+  top:7px;
   display:flex;
   gap:5px;
 }
@@ -183,40 +238,41 @@ header{
   background:#07110ce8;
   color:white;
   font-size:15px;
-  cursor:pointer;
 }
 .action-btn.saved{color:var(--green)}
 .movie-title{
-  font-size:12px;
+  font-size:13px;
   font-weight:bold;
-  margin-top:7px;
-  line-height:1.35;
-  overflow:hidden;
+  margin-top:8px;
+  line-height:1.4;
   display:-webkit-box;
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
+  overflow:hidden;
+  cursor:pointer;
 }
 .movie-meta{
   font-size:10px;
   color:var(--muted);
-  margin-top:4px;
+  margin-top:5px;
+  line-height:1.5;
 }
+.view-small{color:var(--green)}
 .empty{
   text-align:center;
   color:var(--muted);
-  padding:45px 15px;
+  padding:40px 12px;
   grid-column:1/-1;
   font-size:13px;
 }
 .load-more{
   display:block;
-  margin:22px auto;
+  margin:23px auto;
   background:#173c2b;
   color:var(--green);
   border:1px solid #286447;
   padding:12px 25px;
   border-radius:22px;
-  cursor:pointer;
 }
 .bottom-nav{
   position:fixed;
@@ -228,7 +284,7 @@ header{
   background:#0c120f;
   border-top:1px solid #233129;
   padding:10px 4px 12px;
-  z-index:20;
+  z-index:30;
 }
 .nav-item{
   background:none;
@@ -239,7 +295,6 @@ header{
   flex-direction:column;
   align-items:center;
   gap:5px;
-  cursor:pointer;
 }
 .nav-item b{font-size:19px}
 .nav-item.active{color:var(--green)}
@@ -247,31 +302,32 @@ header{
   display:none;
   position:fixed;
   inset:0;
-  z-index:50;
+  z-index:60;
   background:#000e;
   overflow-y:auto;
-  padding:25px 15px;
+  padding:20px 13px;
 }
 .modal-box{
   max-width:500px;
   margin:auto;
   background:#111a15;
   border:1px solid #26382d;
-  border-radius:16px;
+  border-radius:15px;
   overflow:hidden;
 }
 .modal-backdrop{
   width:100%;
   height:190px;
   object-fit:cover;
+  background:#17221c;
 }
-.modal-content{padding:17px}
-.modal-content h2{font-size:21px;margin-bottom:8px}
+.modal-content{padding:16px}
+.modal-content h2{font-size:21px;margin:9px 0}
 .modal-content p{
   color:#b4c0b8;
   font-size:13px;
   line-height:1.6;
-  margin:10px 0;
+  margin:12px 0;
 }
 .modal-close{
   float:right;
@@ -280,29 +336,39 @@ header{
   border:0;
   border-radius:8px;
   padding:7px 11px;
-  cursor:pointer;
 }
-.modal-actions{display:flex;gap:8px;margin-top:15px}
+.modal-actions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:15px;
+}
 .modal-actions button{
-  flex:1;
   border:1px solid #286447;
   background:#153b29;
   color:var(--green);
-  padding:11px 6px;
+  padding:12px 6px;
   border-radius:9px;
-  cursor:pointer;
+  font-weight:bold;
+}
+.modal-actions button:disabled{opacity:.4}
+.view-count{
+  color:var(--green);
+  font-size:12px;
+  margin-top:9px;
 }
 footer{
   text-align:center;
   color:#69776e;
   font-size:10px;
-  line-height:1.6;
-  padding:25px 15px;
+  line-height:1.7;
+  padding:25px 12px;
 }
 @media(min-width:650px){
   .container{max-width:1000px;margin:auto}
   .movie-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
-  .hero{min-height:260px}
+  .hero{min-height:250px}
+  .chip{font-size:13px}
 }
 </style>
 </head>
@@ -311,7 +377,7 @@ footer{
 
 <header>
   <div class="logo">Movie<span>Canvas</span></div>
-  <div class="vip">✦ VIP ACCESS</div>
+  <div class="vip">✦ MOVIE WORLD</div>
 </header>
 
 <main class="container">
@@ -319,33 +385,50 @@ footer{
   <section class="hero">
     <small>WELCOME TO MOVIECANVAS</small>
     <h1>Stories Worth Watching</h1>
-    <p>Discover movies from around the world.</p>
+    <p>Discover movies and series from around the world.</p>
   </section>
+
+  <div class="top-links">
+    <a href="#" onclick="resetHome();return false">⌂ HOME</a>
+    <a href="#" onclick="selectCategory('Action');return false">ACTION</a>
+    <a href="#" onclick="selectCategory('Thriller');return false">THRILLER</a>
+    <a href="#" onclick="selectCategory('Horror');return false">HORROR</a>
+  </div>
 
   <div class="section-title">Find Your <span>Movie</span></div>
 
   <div class="filter-label">Language</div>
-  <div class="filter-row" id="languageFilters">
-    <button class="chip active" data-language="all">ALL</button>
-    <button class="chip" data-language="bn">BANGLA</button>
-    <button class="chip" data-language="hi">HINDI</button>
-    <button class="chip" data-language="dubbed">HINDI DUBBED</button>
-    <button class="chip" data-language="dual">DUAL AUDIO</button>
-    <button class="chip" data-language="en">ENGLISH</button>
+  <div class="filter-grid" id="languageFilters">
+    <button class="chip active" data-language="all">🌐 ALL</button>
+    <button class="chip" data-language="bn">🇧🇩 BANGLA</button>
+    <button class="chip" data-language="hi">🇮🇳 HINDI</button>
+    <button class="chip" data-language="en">🇺🇸 ENGLISH</button>
+    <button class="chip" data-language="ko">🇰🇷 KOREAN</button>
+    <button class="chip" data-language="ja">🇯🇵 JAPANESE</button>
+    <button class="chip" data-language="zh">🇨🇳 CHINESE</button>
+    <button class="chip" data-language="id">🇮🇩 INDONESIAN</button>
+    <button class="chip" data-language="ta">🇮🇳 TAMIL</button>
+    <button class="chip" data-language="te">🇮🇳 TELUGU</button>
+    <button class="chip" data-language="ml">🇮🇳 MALAYALAM</button>
+    <button class="chip" data-language="es">🇪🇸 SPANISH</button>
+    <button class="chip" data-language="ar">🌙 ARABIC</button>
+    <button class="chip" data-language="tr">🇹🇷 TURKISH</button>
   </div>
 
   <div class="filter-label">Popular Categories</div>
-  <div class="filter-row" id="categoryFilters">
-    <button class="chip active" data-category="All">All</button>
-    <button class="chip" data-category="Action">Action</button>
-    <button class="chip" data-category="Thriller">Thriller</button>
-    <button class="chip" data-category="Horror">Horror</button>
-    <button class="chip" data-category="Bollywood">Bollywood</button>
-    <button class="chip" data-category="Hollywood">Hollywood</button>
+  <div class="filter-grid" id="categoryFilters">
+    <button class="chip active" data-category="All">ALL</button>
+    <button class="chip" data-category="Action">⚔ ACTION</button>
+    <button class="chip" data-category="Thriller">🧩 THRILLER</button>
+    <button class="chip" data-category="Horror">👻 HORROR</button>
+    <button class="chip" data-category="Bollywood">🎬 BOLLYWOOD</button>
+    <button class="chip" data-category="Hollywood">🎥 HOLLYWOOD</button>
+    <button class="chip" data-category="Romance">💕 ROMANCE</button>
+    <button class="chip" data-category="Comedy">😂 COMEDY</button>
   </div>
 
   <div class="filter-label">Select Genre</div>
-  <select class="genre-select" id="genreSelect">
+  <select class="chip" id="genreSelect" style="width:100%;text-align:left">
     <option value="all">All Genres</option>
     <option value="28">Action</option>
     <option value="12">Adventure</option>
@@ -362,18 +445,38 @@ footer{
     <option value="9648">Mystery</option>
     <option value="10749">Romance</option>
     <option value="878">Science Fiction</option>
-    <option value="10770">TV Movie</option>
     <option value="53">Thriller</option>
     <option value="10752">War</option>
     <option value="37">Western</option>
   </select>
 
   <div class="search-box">
-    <input id="searchInput" type="search" placeholder="Search movies...">
-    <button id="searchBtn">Search</button>
+    <input id="searchInput" type="search"
+      placeholder="Movie বা Series-এর English নাম লিখুন">
+    <button id="searchBtn">⌕</button>
   </div>
 
-  <div class="section-title" id="sectionTitle">Trending <span>Now</span></div>
+  <div class="category-bars">
+    <button class="category-bar" onclick="loadSpecial('anime')">🍥 ANIME ZONE</button>
+    <button class="category-bar" onclick="loadSpecial('ongoing')">⏳ ONGOING SERIES</button>
+    <button class="category-bar" onclick="loadSpecial('kdrama')">🇰🇷 K-DRAMA</button>
+    <button class="category-bar" onclick="loadSpecial('south')">🔥 SOUTH INDIAN</button>
+    <button class="category-bar" onclick="loadSpecial('animation')">🎨 ANIMATION</button>
+    <button class="category-bar" onclick="loadSpecial('tv')">📺 WEB SERIES</button>
+  </div>
+
+  <div class="notice">
+    🍿 Welcome to MovieCanvas — Discover your next favourite movie!
+  </div>
+
+  <div class="section-head">
+    <div class="section-title" id="sectionTitle">Recently <span>Updated</span></div>
+    <div class="head-actions">
+      <button onclick="showPage('watchlater')">◷</button>
+      <button onclick="showPage('favourites')">★</button>
+    </div>
+  </div>
+
   <div class="movie-grid" id="movieGrid">
     <div class="empty">Loading movies...</div>
   </div>
@@ -400,366 +503,372 @@ footer{
       <button class="modal-close" id="closeModal">✕</button>
       <h2 id="modalTitle"></h2>
       <div class="movie-meta" id="modalMeta"></div>
+      <div class="view-count" id="modalViews">◉ Views: Loading...</div>
       <p id="modalOverview"></p>
       <div class="modal-actions">
         <button id="modalFav">♥ Favourite</button>
         <button id="modalWatch">＋ Watch Later</button>
+        <button id="watchBtn" disabled>▶ Watch</button>
+        <button id="downloadBtn" disabled>↓ Download</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const API = "https://moviecanvas-api.alamin-7ah.workers.dev";
-const IMG = "https://image.tmdb.org/t/p/w500";
-const BACKDROP = "https://image.tmdb.org/t/p/w780";
+const API="https://moviecanvas-api.alamin-7ah.workers.dev";
+const IMG="https://image.tmdb.org/t/p/w500";
+const BACKDROP="https://image.tmdb.org/t/p/w780";
 
-const genres = {
+const genres={
   28:"Action",12:"Adventure",16:"Animation",35:"Comedy",
   80:"Crime",99:"Documentary",18:"Drama",10751:"Family",
   14:"Fantasy",36:"History",27:"Horror",10402:"Music",
   9648:"Mystery",10749:"Romance",878:"Sci-Fi",
-  10770:"TV Movie",53:"Thriller",10752:"War",37:"Western"
+  53:"Thriller",10752:"War",37:"Western"
 };
 
-let movies = [];
-let currentPage = 1;
-let totalPages = 1;
-let currentMovie = null;
-let currentView = "home";
-let selectedLanguage = "all";
-let selectedCategory = "All";
-let selectedGenre = "all";
-let searchText = "";
+let movies=[];
+let currentPage=1;
+let totalPages=1;
+let currentMovie=null;
+let currentView="home";
+let selectedLanguage="all";
+let selectedCategory="All";
+let selectedGenre="all";
+let searchText="";
+let specialMode="";
 
-let favourites = JSON.parse(localStorage.getItem("mc_favourites") || "[]");
-let watchLater = JSON.parse(localStorage.getItem("mc_watchlater") || "[]");
+let favourites=JSON.parse(localStorage.getItem("mc_favourites")||"[]");
+let watchLater=JSON.parse(localStorage.getItem("mc_watchlater")||"[]");
 
-const grid = document.getElementById("movieGrid");
-const title = document.getElementById("sectionTitle");
+const grid=document.getElementById("movieGrid");
+const title=document.getElementById("sectionTitle");
 
 function saveLists(){
-  localStorage.setItem("mc_favourites", JSON.stringify(favourites));
-  localStorage.setItem("mc_watchlater", JSON.stringify(watchLater));
+  localStorage.setItem("mc_favourites",JSON.stringify(favourites));
+  localStorage.setItem("mc_watchlater",JSON.stringify(watchLater));
 }
-
-function isSaved(list,id){
-  return list.some(m => m.id === id);
+function isSaved(list,id){return list.some(m=>m.id===id)}
+function escapeHTML(v){
+  return String(v??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
-
-function toggleList(listName,movie){
-  let list = listName === "favourites" ? favourites : watchLater;
-  const index = list.findIndex(m => m.id === movie.id);
-
-  if(index >= 0){
-    list.splice(index,1);
-  }else{
-    list.push(movie);
-  }
-
-  if(listName === "favourites") favourites = list;
-  else watchLater = list;
-
-  saveLists();
-
-  if(currentView === "favourites" || currentView === "watchlater"){
-    renderMovies(listName === "favourites" ? favourites : watchLater);
-  }else{
-    renderMovies(movies);
-  }
-
-  updateModalButtons();
+function movieName(m){return m.title||m.name||"Untitled"}
+function movieDate(m){return m.release_date||m.first_air_date||""}
+function movieGenre(m){
+  return (m.genre_ids||[]).slice(0,2).map(id=>genres[id]).filter(Boolean).join(" • ")||"Movie";
 }
-
-function movieGenre(movie){
-  const ids = movie.genre_ids || [];
-  return ids.slice(0,2).map(id => genres[id]).filter(Boolean).join(" • ") || "Movie";
+function findMovie(id){
+  return movies.find(m=>m.id===id)||
+    favourites.find(m=>m.id===id)||
+    watchLater.find(m=>m.id===id);
 }
-
 function setActive(group,attribute,value){
   document.querySelectorAll("#"+group+" .chip").forEach(btn=>{
-    btn.classList.toggle("active",btn.dataset[attribute] === value);
+    btn.classList.toggle("active",btn.dataset[attribute]===value);
   });
 }
-
 function updateTitle(){
-  if(currentView === "favourites"){
-    title.innerHTML = "Your <span>Favourites</span>";
-  }else if(currentView === "watchlater"){
-    title.innerHTML = "Your <span>Watch Later</span>";
-  }else if(currentView === "trending"){
-    title.innerHTML = "Trending <span>Movies</span>";
-  }else{
-    title.innerHTML = "Trending <span>Now</span>";
-  }
+  const labels={
+    home:"Recently <span>Updated</span>",
+    trending:"Trending <span>Now</span>",
+    favourites:"Your <span>Favourites</span>",
+    watchlater:"Your <span>Watch Later</span>"
+  };
+  title.innerHTML=labels[currentView]||"MovieCanvas";
 }
-
-async function loadMovies(reset=true){
-  if(currentView === "favourites"){
-    renderMovies(favourites);
-    return;
-  }
-  if(currentView === "watchlater"){
-    renderMovies(watchLater);
-    return;
-  }
-
-  if(selectedLanguage === "dubbed" || selectedLanguage === "dual"){
-    grid.innerHTML = '<div class="empty">TMDB does not provide reliable Hindi Dubbed or Dual Audio information for every movie. These filters need a separate verified audio-language database.</div>';
-    return;
-  }
-
-  if(reset){
-    currentPage = 1;
-    movies = [];
-    grid.innerHTML = '<div class="empty">Loading movies...</div>';
-  }
-
-  let endpoint = "";
-  const params = new URLSearchParams({page:currentPage});
-
-  if(searchText){
-    endpoint = "/search/movie";
-    params.set("query",searchText);
-  }else if(selectedCategory === "Bollywood"){
-    endpoint = "/discover/movie";
-    params.set("with_original_language","hi");
-  }else if(selectedCategory === "Hollywood"){
-    endpoint = "/discover/movie";
-    params.set("with_original_language","en");
-  }else if(selectedCategory !== "All" || selectedGenre !== "all" || selectedLanguage !== "all"){
-    endpoint = "/discover/movie";
-  }else{
-    endpoint = "/trending/movie/week";
-  }
-
-  if(selectedLanguage !== "all"){
-    params.set("with_original_language",selectedLanguage);
-  }
-
-  if(selectedCategory === "Action") params.set("with_genres","28");
-  if(selectedCategory === "Thriller") params.set("with_genres","53");
-  if(selectedCategory === "Horror") params.set("with_genres","27");
-
-  if(selectedGenre !== "all"){
-    params.set("with_genres",selectedGenre);
-  }
-
+function toggleList(which,movie){
+  if(!movie)return;
+  let list=which==="favourites"?favourites:watchLater;
+  const i=list.findIndex(m=>m.id===movie.id);
+  if(i>=0)list.splice(i,1);else list.push(movie);
+  if(which==="favourites")favourites=list;else watchLater=list;
+  saveLists();
+  renderMovies(currentView==="favourites"?favourites:
+    currentView==="watchlater"?watchLater:movies);
+  updateModalButtons();
+}
+function updateModalButtons(){
+  if(!currentMovie)return;
+  document.getElementById("modalFav").textContent=
+    isSaved(favourites,currentMovie.id)?"♥ Saved":"♥ Favourite";
+  document.getElementById("modalWatch").textContent=
+    isSaved(watchLater,currentMovie.id)?"✓ Added":"＋ Watch Later";
+}
+async function getViews(id){
   try{
-    const response = await fetch(API + endpoint + "?" + params.toString());
-    if(!response.ok) throw new Error("API error");
-
-    const data = await response.json();
-    totalPages = Math.min(data.total_pages || 1,500);
-
-    let results = data.results || [];
-
-    if(selectedLanguage !== "all"){
-      results = results.filter(m => m.original_language === selectedLanguage);
-    }
-
-    if(selectedCategory === "Bollywood"){
-      results = results.filter(m => m.original_language === "hi");
-    }
-    if(selectedCategory === "Hollywood"){
-      results = results.filter(m => m.original_language === "en");
-    }
-
-    if(selectedCategory === "Action"){
-      results = results.filter(m => (m.genre_ids||[]).includes(28));
-    }
-    if(selectedCategory === "Thriller"){
-      results = results.filter(m => (m.genre_ids||[]).includes(53));
-    }
-    if(selectedCategory === "Horror"){
-      results = results.filter(m => (m.genre_ids||[]).includes(27));
-    }
-
-    if(selectedGenre !== "all"){
-      results = results.filter(m => (m.genre_ids||[]).includes(Number(selectedGenre)));
-    }
-
-    movies = reset ? results : [...movies,...results];
-    renderMovies(movies);
-  }catch(error){
-    grid.innerHTML = '<div class="empty">Could not load movies. Please try again.</div>';
-  }
-
-  updateTitle();
+    const r=await fetch(`${API}/views?movieId=${id}`);
+    if(!r.ok)return 0;
+    const d=await r.json();
+    return Number(d.views)||0;
+  }catch(e){return 0}
 }
-
+async function updateCardViews(list){
+  for(const m of list){
+    const el=document.getElementById("views-"+m.id);
+    if(!el)continue;
+    const count=await getViews(m.id);
+    const current=document.getElementById("views-"+m.id);
+    if(current)current.textContent="◉ "+count;
+  }
+}
 function renderMovies(list){
-  if(!list || list.length === 0){
-    grid.innerHTML = '<div class="empty">No movies found here yet.</div>';
+  if(!list||!list.length){
+    grid.innerHTML='<div class="empty">No movies found here yet.</div>';
     return;
   }
-
-  grid.innerHTML = list.map(movie=>{
-    const poster = movie.poster_path
-      ? IMG + movie.poster_path
-      : "";
-
-    const fav = isSaved(favourites,movie.id);
-    const watch = isSaved(watchLater,movie.id);
-
+  grid.innerHTML=list.map(m=>{
+    const poster=m.poster_path?IMG+m.poster_path:"";
+    const fav=isSaved(favourites,m.id);
+    const watch=isSaved(watchLater,m.id);
     return `
       <article class="movie-card">
-        <div class="poster-wrap" onclick="openMovie(${movie.id})">
+        <div class="poster-wrap" onclick="openMovie(${m.id})">
           ${poster
-            ? `<img class="poster" src="${poster}" alt="${escapeHTML(movie.title||"Movie")}" loading="lazy">`
-            : `<div class="poster-placeholder">Poster unavailable</div>`}
-          <span class="rating">★ ${(movie.vote_average||0).toFixed(1)}</span>
+            ?`<img class="poster" src="${poster}" alt="${escapeHTML(movieName(m))}" loading="lazy">`
+            :`<div class="empty">Poster unavailable</div>`}
+          <span class="rating">★ ${(m.vote_average||0).toFixed(1)}</span>
         </div>
         <div class="card-actions">
           <button class="action-btn ${fav?"saved":""}"
-            title="Favourite"
-            onclick="event.stopPropagation();toggleList('favourites',findMovie(${movie.id}))">♥</button>
+            onclick="event.stopPropagation();toggleList('favourites',findMovie(${m.id}))">♥</button>
           <button class="action-btn ${watch?"saved":""}"
-            title="Watch Later"
-            onclick="event.stopPropagation();toggleList('watchlater',findMovie(${movie.id}))">＋</button>
+            onclick="event.stopPropagation();toggleList('watchlater',findMovie(${m.id}))">＋</button>
         </div>
-        <div class="movie-title" onclick="openMovie(${movie.id})">
-          ${escapeHTML(movie.title||"Untitled")}
-        </div>
-        <div class="movie-meta">
-          ${(movie.release_date||"").slice(0,4)} • ${movieGenre(movie)}
-        </div>
-      </article>
-    `;
+        <div class="movie-title" onclick="openMovie(${m.id})">${escapeHTML(movieName(m))}</div>
+        <div class="movie-meta">${movieDate(m).slice(0,4)} • ${movieGenre(m)}</div>
+        <div class="movie-meta view-small" id="views-${m.id}">◉ ...</div>
+      </article>`;
   }).join("");
+  updateCardViews(list);
 }
-
-function escapeHTML(value){
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[char]));
-}
-
-function findMovie(id){
-  return movies.find(m=>m.id===id) ||
-    favourites.find(m=>m.id===id) ||
-    watchLater.find(m=>m.id===id);
-}
-
-async function openMovie(id){
-  let movie = findMovie(id);
-  if(!movie) return;
-
-  currentMovie = movie;
-
-  document.getElementById("modalTitle").textContent = movie.title || "Movie";
-  document.getElementById("modalMeta").textContent =
-    `${(movie.release_date||"").slice(0,4)} • ★ ${(movie.vote_average||0).toFixed(1)} • ${movieGenre(movie)}`;
-  document.getElementById("modalOverview").textContent =
-    movie.overview || "No overview available.";
-
-  document.getElementById("modalBackdrop").src =
-    movie.backdrop_path ? BACKDROP + movie.backdrop_path :
-    (movie.poster_path ? IMG + movie.poster_path : "");
-
-  document.getElementById("movieModal").style.display = "block";
-  updateModalButtons();
-}
-
-function updateModalButtons(){
-  if(!currentMovie) return;
-  document.getElementById("modalFav").textContent =
-    isSaved(favourites,currentMovie.id) ? "♥ Saved" : "♥ Favourite";
-  document.getElementById("modalWatch").textContent =
-    isSaved(watchLater,currentMovie.id) ? "✓ Added" : "＋ Watch Later";
-}
-
-document.getElementById("modalFav").onclick = ()=>{
-  if(currentMovie) toggleList("favourites",currentMovie);
-};
-
-document.getElementById("modalWatch").onclick = ()=>{
-  if(currentMovie) toggleList("watchlater",currentMovie);
-};
-
-document.getElementById("closeModal").onclick = ()=>{
-  document.getElementById("movieModal").style.display = "none";
-};
-
-document.getElementById("movieModal").onclick = e=>{
-  if(e.target.id === "movieModal"){
-    document.getElementById("movieModal").style.display = "none";
+async function loadMovies(reset=true){
+  if(currentView==="favourites"){renderMovies(favourites);return}
+  if(currentView==="watchlater"){renderMovies(watchLater);return}
+  if(reset){
+    currentPage=1;
+    movies=[];
+    grid.innerHTML='<div class="empty">Loading movies...</div>';
   }
+
+  let endpoint="/trending/movie/week";
+  const params=new URLSearchParams({page:currentPage});
+
+  if(specialMode==="anime"||specialMode==="animation"){
+    endpoint="/discover/movie";
+    params.set("with_genres","16");
+  }else if(specialMode==="kdrama"){
+    endpoint="/discover/tv";
+    params.set("with_original_language","ko");
+  }else if(specialMode==="ongoing"||specialMode==="tv"){
+    endpoint=specialMode==="ongoing"?"/tv/on_the_air":"/discover/tv";
+  }else if(specialMode==="south"){
+    endpoint="/discover/movie";
+    params.set("with_original_language","ta|te|ml|kn");
+  }else if(searchText){
+    endpoint="/search/multi";
+    params.set("query",searchText);
+  }else if(selectedCategory==="Bollywood"||selectedLanguage==="hi"){
+    endpoint="/discover/movie";
+    params.set("with_original_language","hi");
+  }else if(selectedCategory==="Hollywood"||selectedLanguage==="en"){
+    endpoint="/discover/movie";
+    params.set("with_original_language","en");
+  }else if(selectedLanguage!=="all"||selectedCategory!=="All"||selectedGenre!=="all"){
+    endpoint="/discover/movie";
+  }
+
+  if(!specialMode){
+    if(selectedLanguage!=="all")params.set("with_original_language",selectedLanguage);
+    const catIds={Action:28,Thriller:53,Horror:27,Romance:10749,Comedy:35};
+    if(catIds[selectedCategory])params.set("with_genres",catIds[selectedCategory]);
+    if(selectedGenre!=="all")params.set("with_genres",selectedGenre);
+  }
+
+  try{
+    const r=await fetch(API+endpoint+"?"+params.toString());
+    if(!r.ok)throw new Error("API error");
+    const data=await r.json();
+    totalPages=Math.min(data.total_pages||1,500);
+    let results=(data.results||[]).filter(m=>m.media_type!=="person");
+    if(selectedLanguage!=="all"&&!specialMode){
+      results=results.filter(m=>m.original_language===selectedLanguage);
+    }
+    if(specialMode==="south"){
+      results=results.filter(m=>["ta","te","ml","kn"].includes(m.original_language));
+    }
+    movies=reset?results:[...movies,...results];
+    renderMovies(movies);
+  }catch(e){
+    grid.innerHTML='<div class="empty">Could not load movies. Please try again.</div>';
+  }
+  updateTitle();
+}
+async function openMovie(id){
+  const movie=findMovie(id);
+  if(!movie)return;
+  currentMovie=movie;
+
+  document.getElementById("modalTitle").textContent=movieName(movie);
+  document.getElementById("modalMeta").textContent=
+    `${movieDate(movie).slice(0,4)} • ★ ${(movie.vote_average||0).toFixed(1)} • ${movieGenre(movie)}`;
+  document.getElementById("modalOverview").textContent=
+    movie.overview||"No overview available.";
+  document.getElementById("modalBackdrop").src=
+    movie.backdrop_path?BACKDROP+movie.backdrop_path:
+    movie.poster_path?IMG+movie.poster_path:"";
+
+  document.getElementById("movieModal").style.display="block";
+  document.getElementById("modalViews").textContent="◉ Views: Loading...";
+  updateModalButtons();
+
+  // Count one view per movie per browser tab session.
+  const sessionKey="mc_viewed_"+movie.id;
+  if(!sessionStorage.getItem(sessionKey)){
+    try{
+      await fetch(`${API}/views?movieId=${movie.id}`,{method:"POST"});
+      sessionStorage.setItem(sessionKey,"1");
+    }catch(e){}
+  }
+  const count=await getViews(movie.id);
+  document.getElementById("modalViews").textContent="◉ Views: "+count;
+
+  loadMovieLinks(movie.id);
+}
+function safeURL(value){
+  try{
+    const u=new URL(value);
+    return ["https:","http:"].includes(u.protocol)?u.href:"";
+  }catch(e){return ""}
+}
+async function loadMovieLinks(id){
+  const watch=document.getElementById("watchBtn");
+  const download=document.getElementById("downloadBtn");
+  watch.disabled=true;
+  download.disabled=true;
+  watch.textContent="▶ Watch";
+  download.textContent="↓ Download";
+  watch.onclick=null;
+  download.onclick=null;
+  try{
+    const r=await fetch(`${API}/links?movieId=${id}`);
+    const d=await r.json();
+    const watchURL=safeURL(d.watchUrl);
+    const downloadURL=safeURL(d.downloadUrl);
+    if(watchURL){
+      watch.disabled=false;
+      watch.onclick=()=>window.open(watchURL,"_blank","noopener");
+    }
+    if(downloadURL){
+      download.disabled=false;
+      download.onclick=()=>window.open(downloadURL,"_blank","noopener");
+    }
+  }catch(e){}
+}
+document.getElementById("modalFav").onclick=()=>{
+  if(currentMovie)toggleList("favourites",currentMovie);
 };
-
-document.querySelectorAll("#languageFilters .chip").forEach(btn=>{
-  btn.onclick = ()=>{
-    selectedLanguage = btn.dataset.language;
-    setActive("languageFilters","language",selectedLanguage);
-    currentView = "home";
-    loadMovies();
-  };
-});
-
-document.querySelectorAll("#categoryFilters .chip").forEach(btn=>{
-  btn.onclick = ()=>{
-    selectedCategory = btn.dataset.category;
-    setActive("categoryFilters","category",selectedCategory);
-    currentView = "home";
-    loadMovies();
-  };
-});
-
-document.getElementById("genreSelect").onchange = e=>{
-  selectedGenre = e.target.value;
-  currentView = "home";
-  loadMovies();
+document.getElementById("modalWatch").onclick=()=>{
+  if(currentMovie)toggleList("watchlater",currentMovie);
 };
-
-function searchMovies(){
-  searchText = document.getElementById("searchInput").value.trim();
-  currentView = "home";
+function closeModal(){
+  document.getElementById("movieModal").style.display="none";
+}
+document.getElementById("closeModal").onclick=closeModal;
+document.getElementById("movieModal").onclick=e=>{
+  if(e.target.id==="movieModal")closeModal();
+};
+function resetHome(){
+  specialMode="";
+  selectedLanguage="all";
+  selectedCategory="All";
+  selectedGenre="all";
+  searchText="";
+  document.getElementById("searchInput").value="";
+  document.getElementById("genreSelect").value="all";
+  setActive("languageFilters","language","all");
+  setActive("categoryFilters","category","All");
+  currentView="home";
   loadMovies();
 }
-
-document.getElementById("searchBtn").onclick = searchMovies;
-document.getElementById("searchInput").addEventListener("keydown",e=>{
-  if(e.key === "Enter") searchMovies();
+function selectCategory(cat){
+  specialMode="";
+  selectedCategory=cat;
+  currentView="home";
+  setActive("categoryFilters","category",cat);
+  loadMovies();
+}
+function loadSpecial(mode){
+  specialMode=mode;
+  currentView="home";
+  selectedLanguage="all";
+  selectedCategory="All";
+  selectedGenre="all";
+  searchText="";
+  document.getElementById("searchInput").value="";
+  setActive("languageFilters","language","all");
+  setActive("categoryFilters","category","All");
+  loadMovies();
+}
+function showPage(page){
+  currentView=page;
+  document.querySelectorAll(".nav-item").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===page);
+  });
+  updateTitle();
+  if(page==="favourites")renderMovies(favourites);
+  else if(page==="watchlater")renderMovies(watchLater);
+  else{
+    specialMode="";
+    loadMovies();
+  }
+}
+document.querySelectorAll("#languageFilters .chip").forEach(btn=>{
+  btn.onclick=()=>{
+    selectedLanguage=btn.dataset.language;
+    specialMode="";
+    currentView="home";
+    setActive("languageFilters","language",selectedLanguage);
+    loadMovies();
+  };
 });
-
-document.getElementById("loadMore").onclick = ()=>{
-  if(currentView !== "home" && currentView !== "trending") return;
-  if(currentPage >= totalPages) return;
+document.querySelectorAll("#categoryFilters .chip").forEach(btn=>{
+  btn.onclick=()=>{
+    selectedCategory=btn.dataset.category;
+    specialMode="";
+    currentView="home";
+    setActive("categoryFilters","category",selectedCategory);
+    loadMovies();
+  };
+});
+document.getElementById("genreSelect").onchange=e=>{
+  selectedGenre=e.target.value;
+  specialMode="";
+  currentView="home";
+  loadMovies();
+};
+function searchMovies(){
+  searchText=document.getElementById("searchInput").value.trim();
+  specialMode="";
+  currentView="home";
+  loadMovies();
+}
+document.getElementById("searchBtn").onclick=searchMovies;
+document.getElementById("searchInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter")searchMovies();
+});
+document.getElementById("loadMore").onclick=()=>{
+  if(currentPage>=totalPages)return;
   currentPage++;
   loadMovies(false);
 };
-
 document.querySelectorAll(".nav-item").forEach(btn=>{
-  btn.onclick = ()=>{
-    currentView = btn.dataset.page;
-
-    document.querySelectorAll(".nav-item").forEach(item=>{
-      item.classList.toggle("active",item === btn);
-    });
-
-    updateTitle();
-
-    if(currentView === "favourites"){
-      renderMovies(favourites);
-    }else if(currentView === "watchlater"){
-      renderMovies(watchLater);
-    }else{
-      selectedLanguage = "all";
-      selectedCategory = "All";
-      selectedGenre = "all";
-      searchText = "";
-      document.getElementById("searchInput").value = "";
-      document.getElementById("genreSelect").value = "all";
-      setActive("languageFilters","language","all");
-      setActive("categoryFilters","category","All");
-      currentView = btn.dataset.page;
-      loadMovies();
-    }
-  };
+  btn.onclick=()=>showPage(btn.dataset.page);
 });
 
 loadMovies();
 </script>
-
 </body>
 </html>
