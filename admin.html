@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MovieCanvas Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101310;color:#fff;font-family:Arial,sans-serif;padding:20px}
+.container{max-width:650px;margin:auto}
+h1{color:#42d66b}
+.card{background:#1c241e;padding:18px;border-radius:14px;margin:16px 0}
+input,button{width:100%;padding:13px;margin:7px 0;border:0;border-radius:8px;font-size:15px}
+input{background:#101710;color:white;border:1px solid #35443a}
+button{background:#35c85e;color:#07140a;font-weight:bold;cursor:pointer}
+.secondary{background:#29362c;color:white}
+.danger{background:#a83232;color:white}
+.movie{display:flex;gap:12px;align-items:center;padding:10px;border-bottom:1px solid #35443a;cursor:pointer}
+.movie img{width:55px;border-radius:6px}
+.movie small{color:#aaa}
+#status{color:#8fe6a4;white-space:pre-wrap}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🎬 MovieCanvas Admin</h1>
+<p>Manage authorized movie links</p>
+
+<div class="card">
+<h3>Admin Login</h3>
+<input id="password" type="password" placeholder="Admin Password">
+<button onclick="login()">Login</button>
+<p id="loginStatus"></p>
+</div>
+
+<div id="panel" class="hidden">
+
+<div class="card">
+<h3>Search Movie</h3>
+<input id="search" placeholder="Enter movie name">
+<button onclick="searchMovies()">Search</button>
+<div id="results"></div>
+</div>
+
+<div class="card">
+<h3>Movie Link Manager</h3>
+<input id="movieTitle" placeholder="Selected movie title" readonly>
+<input id="movieId" placeholder="TMDB Movie ID" readonly>
+<input id="watchUrl" placeholder="Authorized Watch URL (https://...)">
+<input id="downloadUrl" placeholder="Authorized Download URL (https://...)">
+<button onclick="saveLinks()">Save Links</button>
+<button class="danger" onclick="deleteLinks()">Delete Links</button>
+<p id="status"></p>
+</div>
+</div>
+</div>
+
+<script>
+const API = "https://moviecanvas-api.alamin-7ah.workers.dev";
+
+let adminPassword = "";
+
+async function login(){
+  const pass = document.getElementById("password").value;
+  const msg = document.getElementById("loginStatus");
+
+  if(!pass){
+    msg.textContent = "Enter your password";
+    return;
+  }
+
+  try{
+    const response = await fetch(API + "/admin/links",{
+      headers:{"X-Admin-Password":pass}
+    });
+
+    if(response.status === 401){
+      msg.textContent = "Incorrect password";
+      return;
+    }
+
+    if(response.status !== 405){
+      msg.textContent = "Login failed. Check Worker settings.";
+      return;
+    }
+
+    adminPassword = pass;
+    document.getElementById("panel").classList.remove("hidden");
+    msg.textContent = "Login successful";
+  }catch(e){
+    msg.textContent = "Connection error";
+  }
+}
+
+async function searchMovies(){
+  const query = document.getElementById("search").value.trim();
+  const results = document.getElementById("results");
+
+  if(!query) return;
+
+  results.textContent = "Searching...";
+
+  try{
+    const response = await fetch(
+      API + "/search/movie?query=" + encodeURIComponent(query)
+    );
+
+    const data = await response.json();
+    results.innerHTML = "";
+
+    (data.results || []).slice(0,12).forEach(movie=>{
+      const item = document.createElement("div");
+      item.className = "movie";
+
+      if(movie.poster_path){
+        const img = document.createElement("img");
+        img.src = "https://image.tmdb.org/t/p/w92" + movie.poster_path;
+        img.alt = "";
+        item.appendChild(img);
+      }
+
+      const info = document.createElement("div");
+      const title = document.createElement("strong");
+      title.textContent = movie.title || "Untitled";
+
+      const detail = document.createElement("small");
+      detail.textContent = "TMDB ID: " + movie.id +
+        " • " + (movie.release_date || "Unknown date");
+
+      info.append(title, document.createElement("br"), detail);
+      item.appendChild(info);
+
+      item.onclick = ()=>selectMovie(movie);
+      results.appendChild(item);
+    });
+
+    if(!data.results || !data.results.length){
+      results.textContent = "No movies found";
+    }
+  }catch(e){
+    results.textContent = "Search failed";
+  }
+}
+
+async function selectMovie(movie){
+  document.getElementById("movieTitle").value = movie.title || "";
+  document.getElementById("movieId").value = movie.id;
+
+  document.getElementById("watchUrl").value = "";
+  document.getElementById("downloadUrl").value = "";
+  document.getElementById("status").textContent = "Loading saved links...";
+
+  try{
+    const response = await fetch(
+      API + "/links?movieId=" + movie.id
+    );
+
+    const data = await response.json();
+
+    document.getElementById("watchUrl").value = data.watchUrl || "";
+    document.getElementById("downloadUrl").value = data.downloadUrl || "";
+    document.getElementById("status").textContent =
+      "Selected: " + movie.title;
+  }catch(e){
+    document.getElementById("status").textContent =
+      "Could not load saved links";
+  }
+}
+
+async function saveLinks(){
+  const movieId = document.getElementById("movieId").value;
+  const watchUrl = document.getElementById("watchUrl").value.trim();
+  const downloadUrl = document.getElementById("downloadUrl").value.trim();
+  const status = document.getElementById("status");
+
+  if(!movieId){
+    status.textContent = "Select a movie first";
+    return;
+  }
+
+  if(!watchUrl && !downloadUrl){
+    status.textContent = "Enter at least one link";
+    return;
+  }
+
+  status.textContent = "Saving...";
+
+  try{
+    const response = await fetch(API + "/admin/links",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "X-Admin-Password":adminPassword
+      },
+      body:JSON.stringify({movieId,watchUrl,downloadUrl})
+    });
+
+    const data = await response.json();
+    status.textContent = data.message || data.error || "Unknown response";
+  }catch(e){
+    status.textContent = "Save failed";
+  }
+}
+
+async function deleteLinks(){
+  const movieId = document.getElementById("movieId").value;
+  const status = document.getElementById("status");
+
+  if(!movieId){
+    status.textContent = "Select a movie first";
+    return;
+  }
+
+  if(!confirm("Delete saved links for this movie?")) return;
+
+  try{
+    const response = await fetch(
+      API + "/admin/links?movieId=" + movieId,
+      {
+        method:"DELETE",
+        headers:{"X-Admin-Password":adminPassword}
+      }
+    );
+
+    const data = await response.json();
+
+    if(data.success){
+      document.getElementById("watchUrl").value = "";
+      document.getElementById("downloadUrl").value = "";
+    }
+
+    status.textContent = data.message || data.error;
+  }catch(e){
+    status.textContent = "Delete failed";
+  }
+}
+</script>
+</body>
+</html>
