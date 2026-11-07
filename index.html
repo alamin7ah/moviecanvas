@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080b0a">
 <title>MovieCanvas</title>
-<link rel="icon" type="image/png" href="moviecanvas-logo.png">
+<link rel="icon" type="image/png" href="logo.png">
 
 <style>
 :root{
@@ -474,6 +474,12 @@ footer{
   line-height:1.7;
 }
 
+footer a{
+  color:var(--green);
+  text-decoration:none;
+  font-weight:bold;
+}
+
 @media(min-width:650px){
   .container{max-width:1050px;margin:auto}
   .trending{height:230px}
@@ -493,7 +499,7 @@ footer{
 <header>
   <div class="brand">
     <img
-      src="moviecanvas-logo.png"
+      src="logo.png"
       alt="MovieCanvas Logo"
       class="site-logo"
     >
@@ -509,58 +515,58 @@ footer{
     <div class="empty">Loading Trending Movies...</div>
   </section>
 
-  <div class="filter-heading">LANGUAGE</div>
+  <div class="filter-heading">🌐 LANGUAGE</div>
 
   <div class="filter-grid" id="languageFilters">
-    <button class="chip active" data-language="all">All</button>
-    <button class="chip" data-language="bn">Bangla</button>
-    <button class="chip" data-language="hi">Hindi</button>
-    <button class="chip" data-language="en">English</button>
-    <button class="chip" data-language="ko">Korean</button>
-    <button class="chip" data-language="ja">Japanese</button>
-    <button class="chip" data-language="zh">Chinese</button>
-    <button class="chip" data-language="id">Indonesian</button>
-    <button class="chip" data-language="ta">Tamil</button>
-    <button class="chip" data-language="te">Telugu</button>
-    <button class="chip" data-language="ml">Malayalam</button>
-    <button class="chip" data-language="es">Spanish</button>
-    <button class="chip" data-language="ar">Arabic</button>
-    <button class="chip" data-language="tr">Turkish</button>
+    <button class="chip active" data-language="all">🌍 All</button>
+    <button class="chip" data-language="bn">🇧🇩 Bangla</button>
+    <button class="chip" data-language="hi">🇮🇳 Hindi</button>
+    <button class="chip" data-language="en">🇺🇸 English</button>
+    <button class="chip" data-language="ko">🇰🇷 Korean</button>
+    <button class="chip" data-language="ja">🇯🇵 Japanese</button>
+    <button class="chip" data-language="zh">🇨🇳 Chinese</button>
+    <button class="chip" data-language="id">🇮🇩 Indonesian</button>
+    <button class="chip" data-language="ta">🎬 Tamil</button>
+    <button class="chip" data-language="te">🎬 Telugu</button>
+    <button class="chip" data-language="ml">🎬 Malayalam</button>
+    <button class="chip" data-language="es">🇪🇸 Spanish</button>
+    <button class="chip" data-language="ar">🇸🇦 Arabic</button>
+    <button class="chip" data-language="tr">🇹🇷 Turkish</button>
   </div>
 
-  <div class="filter-heading">POPULAR CATEGORIES</div>
+  <div class="filter-heading">🎭 POPULAR CATEGORIES</div>
 
   <div class="filter-grid" id="categoryFilters">
-    <button class="chip active" data-category="all">All</button>
-    <button class="chip" data-category="action">Action</button>
-    <button class="chip" data-category="thriller">Thriller</button>
-    <button class="chip" data-category="horror">Horror</button>
-    <button class="chip" data-category="bollywood">Bollywood</button>
-    <button class="chip" data-category="hollywood">Hollywood</button>
-    <button class="chip" data-category="romance">Romance</button>
-    <button class="chip" data-category="comedy">Comedy</button>
+    <button class="chip active" data-category="all">🌍 All</button>
+    <button class="chip" data-category="action">💥 Action</button>
+    <button class="chip" data-category="thriller">😱 Thriller</button>
+    <button class="chip" data-category="horror">👻 Horror</button>
+    <button class="chip" data-category="bollywood">🇮🇳 Bollywood</button>
+    <button class="chip" data-category="hollywood">🎬 Hollywood</button>
+    <button class="chip" data-category="romance">❤️ Romance</button>
+    <button class="chip" data-category="comedy">😂 Comedy</button>
   </div>
 
   <select class="genre-select" id="genreSelect">
-    <option value="all">Select Genre</option>
-    <option value="28">Action</option>
-    <option value="12">Adventure</option>
-    <option value="16">Animation</option>
-    <option value="35">Comedy</option>
-    <option value="80">Crime</option>
-    <option value="99">Documentary</option>
-    <option value="18">Drama</option>
-    <option value="10751">Family</option>
-    <option value="14">Fantasy</option>
-    <option value="36">History</option>
-    <option value="27">Horror</option>
-    <option value="10402">Music</option>
-    <option value="9648">Mystery</option>
-    <option value="10749">Romance</option>
-    <option value="878">Sci-Fi</option>
-    <option value="53">Thriller</option>
-    <option value="10752">War</option>
-    <option value="37">Western</option>
+    <option value="all">🎭 Select Genre</option>
+    <option value="28">💥 Action</option>
+    <option value="12">🗺️ Adventure</option>
+    <option value="16">🎨 Animation</option>
+    <option value="35">😂 Comedy</option>
+    <option value="80">🕵️ Crime</option>
+    <option value="99">📽️ Documentary</option>
+    <option value="18">🎭 Drama</option>
+    <option value="10751">👨‍👩‍👧 Family</option>
+    <option value="14">🧙 Fantasy</option>
+    <option value="36">🏛️ History</option>
+    <option value="27">👻 Horror</option>
+    <option value="10402">🎵 Music</option>
+    <option value="9648">🔍 Mystery</option>
+    <option value="10749">❤️ Romance</option>
+    <option value="878">🚀 Sci-Fi</option>
+    <option value="53">😱 Thriller</option>
+    <option value="10752">⚔️ War</option>
+    <option value="37">🤠 Western</option>
   </select>
 
   <div class="search-box">
@@ -568,16 +574,16 @@ footer{
     <button id="searchButton">Search</button>
   </div>
 
-  <div class="section-title">Explore Categories</div>
+  <div class="section-title">✨ Explore Categories</div>
 
   <div class="category-bar" id="quickCategories">
-    <button class="category-btn active" data-quick="trending">Trending</button>
-    <button class="category-btn" data-quick="anime">Anime Zone</button>
-    <button class="category-btn" data-quick="series">Ongoing Series</button>
-    <button class="category-btn" data-quick="korean">K-Drama</button>
-    <button class="category-btn" data-quick="south">South Indian</button>
-    <button class="category-btn" data-quick="animation">Animation</button>
-    <button class="category-btn" data-quick="web">Web Series</button>
+    <button class="category-btn active" data-quick="trending">🔥 Trending</button>
+    <button class="category-btn" data-quick="anime">🎌 Anime Zone</button>
+    <button class="category-btn" data-quick="series">📺 Ongoing Series</button>
+    <button class="category-btn" data-quick="korean">🇰🇷 K-Drama</button>
+    <button class="category-btn" data-quick="south">🇮🇳 South Indian</button>
+    <button class="category-btn" data-quick="animation">🎨 Animation</button>
+    <button class="category-btn" data-quick="web">🌐 Web Series</button>
   </div>
 
   <div class="notice">
@@ -630,6 +636,14 @@ footer{
   MovieCanvas © 2026<br>
   Movie information and posters are provided by TMDB.<br>
   This product uses the TMDB API but is not endorsed or certified by TMDB.
+  <br><br>
+  <a href="https://www.facebook.com/moviecanvas.7ah"
+     target="_blank"
+     rel="noopener">
+    📘 Official Facebook Page
+  </a>
+  <br><br>
+  যেকোনো সমস্যা বা মুভি রিকুয়েস্ট করতে পেইজে মেসেজ করুন, ধন্যবাদ!
 </footer>
 
 <script>
