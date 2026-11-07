@@ -208,7 +208,7 @@ header{
   outline:none;
 }
 
-/* SEARCH */
+/* SEARCH - GREEN BORDER + GLOW */
 .search-box{
   display:flex;
   gap:7px;
@@ -219,12 +219,19 @@ header{
   flex:1;
   min-width:0;
   background:#151d19;
-  border:1px solid #294536;
+  border:1px solid #20d68a;
   border-radius:8px;
   padding:12px;
   color:white;
   outline:none;
   font-size:13px;
+  box-shadow:0 0 8px rgba(32,214,138,.35);
+  transition:all .25s ease;
+}
+
+.search-box input:focus{
+  border-color:#20d68a;
+  box-shadow:0 0 13px rgba(32,214,138,.65);
 }
 
 .search-box button{
