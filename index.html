@@ -91,7 +91,7 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
 .trailer-button{display:inline-block;background:var(--green);color:#06130c;border:0;border-radius:7px;padding:12px 18px;font-weight:bold;text-decoration:none;font-size:12px}
 .quality-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
 .quality-button{background:#17251d;color:#bcebd0;border:1px solid #315541;border-radius:8px;padding:13px 5px;font-size:12px;font-weight:bold}
-.quality-button:disabled{opacity:.35;cursor:not-allowed}
+.quality-button:active{background:var(--green);color:#06130c}
 .cast-list{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
 .cast-item{min-width:85px;width:85px}
 .cast-item img{width:85px;height:110px;object-fit:cover;border-radius:7px;background:#17211b}
@@ -471,6 +471,9 @@ document.querySelectorAll(".category-btn").forEach(b=>b.onclick=()=>{
 /* DETAILS */
 async function openMovie(movie){
  currentMovie=movie;
+ currentLinks={};
+ currentDetails={};
+ currentServers=[];
  const id=String(movie.id),type=mediaType(movie);
  $("detailsPage").style.display="block";
  $("gatewayPage").style.display="none";
@@ -489,13 +492,11 @@ async function openMovie(movie){
  $("playerScreen").innerHTML='<div class="player-placeholder">🎬 MovieCanvas Player<br><br>Choose a video source below</div>';
  $("playerNote").textContent="Loading saved video links...";
  $("serverList").innerHTML="";
- $("qualityGrid").innerHTML="";
- $("currentQuality");
- $("gatewayPage").style.display="none";
+ renderQualityButtons();
 
  try{
   const d=await api(`/${type}/${id}?append_to_response=credits,videos,images`);
-  if(currentMovie?.id!==movie.id)return;
+  if(String(currentMovie?.id)!==id)return;
   currentDetails=d;
   $("detailTitle").textContent=titleOf(d);
   $("detailOverview").textContent=d.overview||"No description available.";
@@ -508,6 +509,7 @@ async function openMovie(movie){
   renderTrailer(d.videos?.results||[]);
   renderMoreMovies();
  }catch{
+  if(String(currentMovie?.id)!==id)return;
   $("castList").innerHTML='<p class="no-data">Cast unavailable.</p>';
   $("sceneList").innerHTML='<p class="no-data">Screenshots unavailable.</p>';
   $("trailerArea").innerHTML='<p class="no-data">Trailer unavailable.</p>';
@@ -557,7 +559,6 @@ function renderTrailer(videos){
   const v=videos.find(x=>x.site==="YouTube"&&x.type==="Trailer")||videos.find(x=>x.site==="YouTube");
   if(v)trailer="https://www.youtube.com/watch?v="+v.key;
  }
- const embed=youtubeEmbed(trailer);
  $("trailerArea").innerHTML=trailer
   ?`<a class="trailer-button" href="${esc(trailer)}" target="_blank" rel="noopener">▶ Watch Trailer</a>`
   :'<p class="no-data">No trailer available.</p>';
@@ -638,22 +639,26 @@ function getProviderUrl(quality,provider){
  if(typeof item==="string")return provider==="direct"?safeURL(item):"";
  return item&&typeof item==="object"?safeURL(item[provider]):"";
 }
+
+/* IMPORTANT: Every quality is ALWAYS clickable, even without saved URLs. */
 function renderQualityButtons(){
- $("qualityGrid").innerHTML="";
+ const box=$("qualityGrid");
+ box.innerHTML="";
  QUALITIES.forEach(q=>{
-  const available=PROVIDERS.some(([p])=>getProviderUrl(q,p));
   const b=document.createElement("button");
   b.className="quality-button";
-  b.textContent=available?"↓ "+q:q+" • Unavailable";
-  b.disabled=!available;
-  if(available)b.onclick=()=>openGateway(q);
-  $("qualityGrid").appendChild(b);
+  b.type="button";
+  b.textContent="↓ "+q;
+  b.disabled=false;
+  b.onclick=()=>openGateway(q);
+  box.appendChild(b);
  });
 }
+
 function openGateway(quality){
  if(!currentMovie)return;
  selectedQuality=quality;
- $("gatewayTitle").textContent=titleOf(currentDetails||currentMovie);
+ $("gatewayTitle").textContent=titleOf(currentDetails?.id?currentDetails:currentMovie);
  $("gatewayPoster").src=poster(currentMovie);
  $("gatewayMeta").textContent=yearOf(currentMovie)+" • "+languageName(currentMovie.original_language);
  $("gatewayQuality").textContent="Selected Quality: "+quality;
@@ -663,6 +668,7 @@ function openGateway(quality){
   const url=getProviderUrl(quality,key);
   const b=document.createElement("button");
   b.className="provider-button";
+  b.type="button";
   b.innerHTML=`<span>${esc(name)}</span><span>${url?"AVAILABLE →":"NOT AVAILABLE"}</span>`;
   b.disabled=!url;
   if(url)b.onclick=()=>window.open(url,"_blank","noopener,noreferrer");
@@ -680,14 +686,16 @@ $("backGateway").onclick=()=>{
 };
 async function loadMovieLinks(id){
  currentLinks={};
+ renderQualityButtons();
  try{
   const l=await api("/links?movieId="+encodeURIComponent(id));
-  if(currentMovie?.id!==Number(id)&&String(currentMovie?.id)!==String(id))return;
+  if(String(currentMovie?.id)!==String(id))return;
   currentLinks=l||{};
   loadServers(currentLinks);
   renderQualityButtons();
   if(currentDetails?.videos?.results)renderTrailer(currentDetails.videos.results);
  }catch{
+  if(String(currentMovie?.id)!==String(id))return;
   $("playerNote").textContent="Could not load video links.";
   renderQualityButtons();
  }
@@ -695,16 +703,23 @@ async function loadMovieLinks(id){
 async function loadViews(id){
  try{
   const d=await api("/views?movieId="+id);
+  if(String(currentMovie?.id)!==String(id))return;
   $("detailViews").textContent="👁 Views: "+(d.views||0);
   const key="mc_viewed_"+id;
   if(!sessionStorage.getItem(key)){
    sessionStorage.setItem(key,"1");
    try{
     const n=await api("/views?movieId="+id,{method:"POST"});
-    $("detailViews").textContent="👁 Views: "+(n.views||0);
+    if(String(currentMovie?.id)===String(id)){
+     $("detailViews").textContent="👁 Views: "+(n.views||0);
+    }
    }catch{}
   }
- }catch{$("detailViews").textContent="👁 Views unavailable"}
+ }catch{
+  if(String(currentMovie?.id)===String(id)){
+   $("detailViews").textContent="👁 Views unavailable";
+  }
+ }
 }
 function renderMoreMovies(){
  const list=[...trendingMovies,...movies].filter(m=>m.id!==currentMovie?.id);
@@ -730,6 +745,8 @@ function closeDetails(){
  document.body.style.overflow="";
  stopPlayer();
  currentMovie=null;
+ currentLinks={};
+ currentDetails={};
 }
 $("backDetails").onclick=closeDetails;
 window.addEventListener("keydown",e=>{
