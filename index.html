@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +12,11 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--white);font-family:Arial,sans-serif;padding-bottom:75px}
 button,input,select{font:inherit}button{cursor:pointer}
-header{display:flex;align-items:center;justify-content:space-between;padding:9px 15px;background:#0c120f;border-bottom:1px solid #1d3026;position:sticky;top:0;z-index:50;min-height:65px}
-.site-logo{width:190px;height:48px;object-fit:contain;object-position:left}
-.vip{background:var(--darkgreen);color:var(--green);padding:7px 13px;border-radius:20px;font-size:11px;font-weight:bold}
+header{display:grid;grid-template-columns:45px 1fr 65px;align-items:center;padding:8px 12px;background:#0c120f;border-bottom:1px solid #1d3026;position:sticky;top:0;z-index:50;min-height:72px}
+.header-menu{width:39px;height:39px;border:1px solid #294536;background:#17251d;color:var(--green);border-radius:8px;font-size:22px}
+.logo-center{text-align:center;display:flex;justify-content:center;align-items:center}
+.site-logo{width:220px;height:54px;object-fit:contain;object-position:center}
+.vip{justify-self:end;background:var(--darkgreen);color:var(--green);padding:8px 11px;border-radius:20px;font-size:11px;font-weight:bold}
 .container{padding:13px}
 .section-title{font-size:17px;font-weight:bold;margin:18px 0 12px;display:flex;align-items:center;justify-content:space-between}
 .section-title span{color:var(--green);font-size:11px}
@@ -55,8 +58,36 @@ header{display:flex;align-items:center;justify-content:space-between;padding:9px
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0d1410;border-top:1px solid #26372e;display:flex;justify-content:space-around;padding:11px 3px;z-index:60}
 .bottom-nav button{border:0;background:none;color:#9aa79f;font-size:10px;font-weight:bold}
 .bottom-nav button.active{color:var(--green)}
-footer{text-align:center;color:#718078;font-size:10px;padding:25px 10px;line-height:1.7}
-footer a{color:var(--green);text-decoration:none;font-weight:bold}
+footer{text-align:center;color:#a0afa6;font-size:13px;padding:30px 14px 35px;line-height:2;background:#0c120f;border-top:1px solid #26372e;margin-top:20px}
+footer a{color:var(--green);text-decoration:none;font-weight:bold;font-size:14px}
+.footer-message{font-size:14px;color:#e3eee7;font-weight:bold;margin-top:12px}
+.footer-contact{display:inline-block;background:#14251b;border:1px solid #315541;border-radius:8px;padding:9px 15px;margin:12px 0}
+
+/* MENU */
+.menu-backdrop{display:none;position:fixed;inset:0;background:#000b;z-index:150}
+.side-menu{position:fixed;top:0;left:0;bottom:0;width:min(82%,310px);background:#0d1510;border-right:1px solid #315541;z-index:151;transform:translateX(-105%);transition:transform .25s;padding:18px;overflow-y:auto}
+.side-menu.open{transform:translateX(0)}
+.menu-backdrop.show{display:block}
+.menu-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.menu-top img{width:175px;height:48px;object-fit:contain}
+.menu-close{background:#20372a;color:var(--green);border:0;border-radius:7px;padding:8px 12px;font-size:18px}
+.menu-item{display:block;width:100%;text-align:left;background:#142019;border:1px solid #294536;color:#e7f2ea;padding:14px;border-radius:8px;margin:9px 0;font-size:13px;font-weight:bold}
+.menu-item span{color:var(--green);margin-right:8px}
+.menu-label{font-size:11px;color:var(--muted);margin:20px 0 8px}
+
+/* MODALS */
+.modal-backdrop{display:none;position:fixed;inset:0;background:#000c;z-index:180;align-items:center;justify-content:center;padding:18px}
+.modal-backdrop.show{display:flex}
+.modal-box{width:100%;max-width:420px;background:#111a14;border:1px solid #315541;border-radius:13px;padding:20px;max-height:85vh;overflow:auto}
+.modal-title{color:var(--green);font-size:20px;margin-bottom:12px}
+.modal-description{color:#bdc9c1;font-size:12px;line-height:1.8;margin-bottom:15px}
+.modal-close{float:right;background:#20372a;border:0;color:var(--green);border-radius:6px;padding:7px 11px}
+.donation-option{background:#17251d;border:1px solid #315541;border-radius:9px;padding:14px;margin:12px 0}
+.donation-option h3{font-size:14px;margin-bottom:9px}
+.donation-number{font-size:19px;color:var(--green);font-weight:bold;letter-spacing:1px}
+.copy-number{display:block;width:100%;margin-top:11px;background:var(--green);color:#06130c;border:0;border-radius:7px;padding:11px;font-weight:bold}
+.login-button{width:100%;padding:13px;border:1px solid #52675b;border-radius:8px;background:#f5f5f5;color:#202020;font-weight:bold;margin:8px 0}
+.login-note{font-size:11px;color:var(--muted);line-height:1.7;margin-top:12px}
 
 /* DETAILS */
 .page-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:120;overflow-y:auto;padding-bottom:30px}
@@ -85,12 +116,11 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
 .server-list button{background:#17251d;color:#bcebd0;border:1px solid #315541;border-radius:6px;padding:9px 12px;font-size:11px}
 .server-list button.active{background:var(--green);color:#06130c}
 .loading-note,.no-data{color:var(--muted);font-size:11px;margin-top:8px}
-.scene-list{display:flex;flex-direction:column;gap:12px}
+.scene-list{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .scene-list img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:#17211b}
 .trailer-button{display:inline-block;background:var(--green);color:#06130c;border:0;border-radius:7px;padding:12px 18px;font-weight:bold;text-decoration:none;font-size:12px}
 .quality-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
 .quality-button{background:#17251d;color:#bcebd0;border:1px solid #315541;border-radius:8px;padding:13px 5px;font-size:12px;font-weight:bold}
-.quality-button:disabled{opacity:.35;cursor:not-allowed}
 .cast-list{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
 .cast-item{min-width:85px;width:85px}
 .cast-item img{width:85px;height:110px;object-fit:cover;border-radius:7px;background:#17211b}
@@ -107,7 +137,7 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
 .provider-list{display:flex;flex-direction:column;gap:11px}
 .provider-button{display:flex;align-items:center;justify-content:space-between;text-align:left;width:100%;padding:16px;background:#142019;border:1px solid #315541;border-radius:9px;color:#e8f5ec;font-weight:bold}
 .provider-button span:last-child{color:var(--green);font-size:11px}
-.provider-button:disabled{opacity:.35;cursor:not-allowed}
+.provider-button:disabled{opacity:.45;cursor:not-allowed}
 .gateway-help{font-size:11px;color:var(--muted);line-height:1.7;margin-top:18px}
 .more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 @media(min-width:650px){
@@ -122,14 +152,34 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
 .quality-grid{grid-template-columns:repeat(6,minmax(0,1fr))}
 .more-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
+@media(max-width:380px){
+.site-logo{width:185px}
+.scene-list{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
 <header>
- <img src="logo.png" alt="MovieCanvas" class="site-logo">
+ <button class="header-menu" id="menuOpen" aria-label="Open menu">☰</button>
+ <div class="logo-center"><img src="logo.png" alt="MovieCanvas" class="site-logo"></div>
  <div class="vip">✦ VIP</div>
 </header>
+
+<!-- SIDE MENU -->
+<div class="menu-backdrop" id="menuBackdrop"></div>
+<aside class="side-menu" id="sideMenu">
+ <div class="menu-top">
+  <img src="logo.png" alt="MovieCanvas">
+  <button class="menu-close" id="menuClose">✕</button>
+ </div>
+ <div class="menu-label">MOVIECANVAS MENU</div>
+ <button class="menu-item" data-menu="home"><span>⌂</span> Home</button>
+ <button class="menu-item" data-menu="login"><span>👤</span> Login / Google Account</button>
+ <button class="menu-item" data-menu="donate"><span>💚</span> Support / Donation</button>
+ <button class="menu-item" data-menu="support"><span>📩</span> Contact Support</button>
+ <button class="menu-item" data-menu="about"><span>ℹ️</span> About MovieCanvas</button>
+</aside>
 
 <main class="container">
  <div class="section-title">🔥 Trending Movies <span>LIVE TRENDING</span></div>
@@ -235,13 +285,13 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
   </div>
 
   <h3 class="details-heading">📖 Storyline</h3>
-  <p class="details-description" id="detailOverview"></p>
+  <p class="details-description" id="detailOverview">Loading storyline...</p>
   <h3 class="details-heading">🎞️ Movie Screenshots</h3>
   <div class="scene-list" id="sceneList"></div>
   <h3 class="details-heading">▶ Watch Trailer</h3>
   <div id="trailerArea"><p class="no-data">Loading trailer...</p></div>
   <h3 class="details-heading">⬇ Download Options</h3>
-  <p class="loading-note">Select a quality to open its Download Gateway.</p>
+  <p class="loading-note">Select any quality to open its Download Gateway.</p>
   <div class="quality-grid" id="qualityGrid"></div>
   <h3 class="details-heading">🎭 Cast / Actors</h3>
   <div class="cast-list" id="castList"></div>
@@ -267,9 +317,50 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
   </div>
   <h3 class="gateway-quality" id="gatewayQuality">Selected Quality</h3>
   <div class="provider-list" id="providerList"></div>
-  <p class="gateway-help">Choose an available provider. Some providers may require an account or sign-in. Follow the provider's normal access and download instructions.</p>
+  <p class="gateway-help">Choose an available provider. Providers without a saved link will be marked NOT AVAILABLE. Add links from the MovieCanvas Admin Panel to activate them.</p>
  </div>
 </section>
+
+<!-- LOGIN MODAL -->
+<div class="modal-backdrop" id="loginModal">
+ <div class="modal-box">
+  <button class="modal-close" data-close-modal="loginModal">✕</button>
+  <h2 class="modal-title">👤 MovieCanvas Login</h2>
+  <p class="modal-description">Sign-in options for your MovieCanvas account.</p>
+  <button class="login-button" id="googleLoginButton">🌐 Continue with Google</button>
+  <p class="login-note">Google authentication is not connected yet. Firebase or another OAuth provider must be configured before account sign-in can work. This button is currently a setup placeholder.</p>
+ </div>
+</div>
+
+<!-- DONATION MODAL -->
+<div class="modal-backdrop" id="donationModal">
+ <div class="modal-box">
+  <button class="modal-close" data-close-modal="donationModal">✕</button>
+  <h2 class="modal-title">💚 Support MovieCanvas</h2>
+  <p class="modal-description">MovieCanvas ভালো লাগলে আমাদের পাশে থাকতে পারো। নিচের নম্বরটি ব্যবহার করে bKash অথবা Nagad অ্যাপে নিজের পছন্দমতো সহায়তা পাঠাতে পারো। পাঠানোর আগে নম্বরটি যাচাই করে নিও।</p>
+  <div class="donation-option">
+   <h3>🩷 bKash</h3>
+   <div class="donation-number">01618281457</div>
+   <button class="copy-number" data-copy-number="01618281457">Copy bKash Number</button>
+  </div>
+  <div class="donation-option">
+   <h3>🟠 Nagad</h3>
+   <div class="donation-number">01618281457</div>
+   <button class="copy-number" data-copy-number="01618281457">Copy Nagad Number</button>
+  </div>
+  <p class="login-note">এটি Donation তথ্য ও নম্বর কপি করার সুবিধা। অ্যাপের ভেতরে সরাসরি পেমেন্ট প্রসেসিং চালু নেই।</p>
+ </div>
+</div>
+
+<!-- ABOUT MODAL -->
+<div class="modal-backdrop" id="aboutModal">
+ <div class="modal-box">
+  <button class="modal-close" data-close-modal="aboutModal">✕</button>
+  <h2 class="modal-title">🎬 About MovieCanvas</h2>
+  <p class="modal-description">MovieCanvas is a movie and series discovery platform. Explore trending titles, browse categories, view movie information, cast, trailers and available media links.</p>
+  <p class="modal-description">Movie information and posters are provided by TMDB. This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+ </div>
+</div>
 
 <nav class="bottom-nav">
  <button class="active" data-nav="home">⌂<br>Home</button>
@@ -279,12 +370,17 @@ footer a{color:var(--green);text-decoration:none;font-weight:bold}
 </nav>
 
 <footer>
- MovieCanvas © 2026<br>
+ <strong style="color:var(--green);font-size:16px">MovieCanvas © 2026</strong><br>
  Movie information and posters are provided by TMDB.<br>
  This product uses the TMDB API but is not endorsed or certified by TMDB.
  <br><br>
- <a href="https://www.facebook.com/moviecanvas.7ah" target="_blank" rel="noopener">📘 Official Facebook Page</a>
- <br><br>যেকোনো সমস্যা বা মুভি রিকুয়েস্ট করতে পেইজে মেসেজ করুন, ধন্যবাদ!
+ <div class="footer-contact">
+  <a href="https://www.facebook.com/moviecanvas.7ah" target="_blank" rel="noopener">📘 Official MovieCanvas Facebook Page</a>
+ </div>
+ <br>
+ <div class="footer-message">যেকোনো সমস্যা বা মুভি রিকুয়েস্ট করতে পেইজে মেসেজ করুন, ধন্যবাদ!</div>
+ <br>
+ <a href="https://www.facebook.com/alamin.7ah" target="_blank" rel="noopener">Personal Facebook</a>
 </footer>
 
 <script>
@@ -305,14 +401,12 @@ let currentLanguage="all",currentCategory="all",currentGenre="all";
 let currentQuick="trending",slideIndex=0,slideTimer=null;
 let currentLinks={},currentDetails={},currentServers=[],selectedQuality="";
 let movieCache=new Map();
-
 let favourites=JSON.parse(localStorage.getItem("mc_favourites")||"[]");
 let watchLater=JSON.parse(localStorage.getItem("mc_watchlater")||"[]");
 
 const $=id=>document.getElementById(id);
 const grid=$("movieGrid");
 
-/* INITIAL HISTORY STATE */
 if(!history.state?.mcApp){
  history.replaceState({mcApp:true,page:"home"},"",location.href);
 }
@@ -342,6 +436,64 @@ function mediaType(m){return m.media_type==="tv"||m.first_air_date&&!m.release_d
 function languageName(code){
  return ({bn:"Bangla",hi:"Hindi",en:"English",ko:"Korean",ja:"Japanese",zh:"Chinese",ta:"Tamil",te:"Telugu",ml:"Malayalam",id:"Indonesian",es:"Spanish",ar:"Arabic",tr:"Turkish"})[code]||code||"Unknown";
 }
+
+/* MENU + MODALS */
+function closeMenu(){
+ $("sideMenu").classList.remove("open");
+ $("menuBackdrop").classList.remove("show");
+}
+function openModal(id){
+ closeMenu();
+ $(id).classList.add("show");
+}
+function closeModal(id){$(id).classList.remove("show")}
+
+$("menuOpen").onclick=()=>{
+ $("sideMenu").classList.add("open");
+ $("menuBackdrop").classList.add("show");
+};
+$("menuClose").onclick=closeMenu;
+$("menuBackdrop").onclick=closeMenu;
+
+document.querySelectorAll("[data-close-modal]").forEach(b=>{
+ b.onclick=()=>closeModal(b.dataset.closeModal);
+});
+document.querySelectorAll(".modal-backdrop").forEach(backdrop=>{
+ backdrop.addEventListener("click",e=>{
+  if(e.target===backdrop)backdrop.classList.remove("show");
+ });
+});
+
+document.querySelectorAll("[data-menu]").forEach(b=>b.onclick=()=>{
+ const action=b.dataset.menu;
+ closeMenu();
+ if(action==="home"){
+  closeModal("loginModal");closeModal("donationModal");closeModal("aboutModal");
+  closeDetails();
+  window.scrollTo({top:0,behavior:"smooth"});
+ }else if(action==="login")openModal("loginModal");
+ else if(action==="donate")openModal("donationModal");
+ else if(action==="about")openModal("aboutModal");
+ else if(action==="support")window.open("https://www.facebook.com/moviecanvas.7ah","_blank","noopener");
+});
+
+document.querySelectorAll("[data-copy-number]").forEach(b=>b.onclick=async()=>{
+ const number=b.dataset.copyNumber;
+ try{
+  await navigator.clipboard.writeText(number);
+  b.textContent="✓ Copied!";
+ }catch{
+  const t=document.createElement("textarea");
+  t.value=number;document.body.appendChild(t);t.select();
+  try{document.execCommand("copy");b.textContent="✓ Copied!"}
+  catch{b.textContent=number}
+  t.remove();
+ }
+ setTimeout(()=>b.textContent=b.textContent.includes("bKash")?"Copy bKash Number":b.textContent.includes("Nagad")?"Copy Nagad Number":"Copy Number",1800);
+});
+$("googleLoginButton").onclick=()=>{
+ alert("Google Login is not configured yet. Firebase/OAuth setup is required.");
+};
 
 /* TRENDING */
 async function loadTrending(){
@@ -487,10 +639,7 @@ document.querySelectorAll(".category-btn").forEach(b=>b.onclick=()=>{
 /* DETAILS + HISTORY */
 async function openMovie(movie,options={}){
  if(!movie)return;
-
- const type=mediaType(movie);
- const id=String(movie.id);
-
+ const type=mediaType(movie),id=String(movie.id);
  movie.media_type=type;
  movieCache.set(type+"-"+id,movie);
 
@@ -512,7 +661,7 @@ async function openMovie(movie,options={}){
  $("detailTitle").textContent=titleOf(movie);
  $("detailPoster").src=movie.backdrop_path?BACKDROP+movie.backdrop_path:poster(movie);
  $("detailMeta").innerHTML=`<span class="details-rating">⭐ ${Number(movie.vote_average||0).toFixed(1)}/10</span> • ${yearOf(movie)} • ${type.toUpperCase()} • ${esc(languageName(movie.original_language))}`;
- $("detailOverview").textContent=movie.overview||"No description available.";
+ $("detailOverview").textContent=movie.overview||"No storyline information is available.";
  $("detailTags").innerHTML=`<span class="detail-tag">${esc(languageName(movie.original_language))}</span><span class="detail-tag">${type==="tv"?"TV Series":"Movie"}</span><span class="detail-tag">${esc(yearOf(movie))}</span>`;
 
  updateDetailLists();
@@ -526,32 +675,38 @@ async function openMovie(movie,options={}){
  $("serverList").innerHTML="";
  $("qualityGrid").innerHTML="";
 
+ // Show all sections even if TMDB or saved-link requests fail.
+ renderQualityButtons();
+
  try{
   const d=await api(`/${type}/${id}?append_to_response=credits,videos,images`);
-  if(String(currentMovie?.id)!==id)return;
+  if(String(currentMovie?.id)!==id||mediaType(currentMovie)!==type)return;
 
-  currentDetails=d;
+  currentDetails=d||{};
   currentDetails.media_type=type;
 
   $("detailTitle").textContent=titleOf(d);
-  $("detailOverview").textContent=d.overview||"No description available.";
+  $("detailOverview").textContent=d.overview||movie.overview||"No storyline information is available.";
   $("detailPoster").src=d.backdrop_path?BACKDROP+d.backdrop_path:poster(d);
 
   const genres=(d.genres||[]).map(g=>g.name);
   $("detailMeta").innerHTML=`<span class="details-rating">⭐ ${Number(d.vote_average||0).toFixed(1)}/10</span> • ${yearOf(d)} • ${type.toUpperCase()} • ${esc(languageName(d.original_language))}<br>📅 Released: ${esc(d.release_date||d.first_air_date||"N/A")}<br>🗣️ Language: ${esc(languageName(d.original_language))}`;
-  $("detailTags").innerHTML=genres.map(g=>`<span class="detail-tag">${esc(g)}</span>`).join("")+`<span class="detail-tag">${esc(languageName(d.original_language))}</span>`;
+  $("detailTags").innerHTML=genres.map(g=>`<span class="detail-tag">${esc(g)}</span>`).join("")+`<span class="detail-tag">${esc(languageName(d.original_language))}</span><span class="detail-tag">${type==="tv"?"TV Series":"Movie"}</span>`;
 
   renderCast(d.credits?.cast||[]);
   renderScenes(d.images?.backdrops||[]);
   renderTrailer(d.videos?.results||[]);
   renderMoreMovies();
  }catch{
-  if(String(currentMovie?.id)!==id)return;
-  $("castList").innerHTML='<p class="no-data">Cast unavailable.</p>';
+  if(String(currentMovie?.id)!==id||mediaType(currentMovie)!==type)return;
+  $("detailOverview").textContent=movie.overview||"Storyline information is currently unavailable.";
+  $("castList").innerHTML='<p class="no-data">Cast information unavailable.</p>';
   $("sceneList").innerHTML='<p class="no-data">Screenshots unavailable.</p>';
   $("trailerArea").innerHTML='<p class="no-data">Trailer unavailable.</p>';
+  $("detailMeta").innerHTML=`${yearOf(movie)} • ${type.toUpperCase()} • ${esc(languageName(movie.original_language))}<br>TMDB details could not be loaded.`;
  }
 
+ // Link loading is independent from TMDB details.
  await loadMovieLinks(id);
  loadViews(id);
 }
@@ -580,7 +735,8 @@ function renderCast(cast){
  <p>${esc(p.name)}</p><small>${esc(p.character||"Cast")}</small></div>`).join(""):'<p class="no-data">Cast not available.</p>';
 }
 function renderScenes(images){
- $("sceneList").innerHTML=images.length?images.slice(0,12).map(i=>`<img loading="lazy" src="${BACKDROP+i.file_path}" alt="Movie scene">`).join(""):'<p class="no-data">No screenshots available.</p>';
+ const four=images.filter(i=>i.file_path).slice(0,4);
+ $("sceneList").innerHTML=four.length?four.map(i=>`<img loading="lazy" src="${BACKDROP+i.file_path}" alt="Movie scene">`).join(""):'<p class="no-data">No screenshots available.</p>';
 }
 function youtubeId(url){
  try{
@@ -683,24 +839,22 @@ function getProviderUrl(quality,provider){
 function renderQualityButtons(){
  $("qualityGrid").innerHTML="";
  QUALITIES.forEach(q=>{
-  const available=PROVIDERS.some(([p])=>getProviderUrl(q,p));
   const b=document.createElement("button");
   b.className="quality-button";
-  b.textContent=available?"↓ "+q:q+" • Unavailable";
-  b.disabled=!available;
-  if(available)b.onclick=()=>openGateway(q);
+  b.textContent="↓ "+q;
+  b.disabled=false;
+  b.onclick=()=>openGateway(q);
   $("qualityGrid").appendChild(b);
  });
 }
 
-/* SHOW GATEWAY WITHOUT ADDING HISTORY */
 function renderGateway(quality){
  if(!currentMovie)return;
  selectedQuality=quality;
-
- $("gatewayTitle").textContent=titleOf(currentDetails?.id?currentDetails:currentMovie);
+ const detail=currentDetails?.id?currentDetails:currentMovie;
+ $("gatewayTitle").textContent=titleOf(detail);
  $("gatewayPoster").src=poster(currentMovie);
- $("gatewayMeta").textContent=yearOf(currentMovie)+" • "+languageName(currentMovie.original_language);
+ $("gatewayMeta").textContent=yearOf(detail)+" • "+languageName(detail.original_language);
  $("gatewayQuality").textContent="Selected Quality: "+quality;
  $("providerList").innerHTML="";
 
@@ -719,12 +873,10 @@ function renderGateway(quality){
  document.body.style.overflow="hidden";
  window.scrollTo(0,0);
 }
-
 function openGateway(quality){
  if(!currentMovie)return;
  history.pushState({
-  mcApp:true,
-  page:"gateway",
+  mcApp:true,page:"gateway",
   id:String(currentMovie.id),
   type:mediaType(currentMovie),
   quality
@@ -743,7 +895,8 @@ async function loadMovieLinks(id){
   if(currentDetails?.videos?.results)renderTrailer(currentDetails.videos.results);
  }catch{
   if(String(currentMovie?.id)!==String(id))return;
-  $("playerNote").textContent="Could not load video links.";
+  currentLinks={};
+  $("playerNote").textContent="No saved video links for this title yet.";
   renderQualityButtons();
  }
 }
@@ -787,13 +940,9 @@ function renderMoreMovies(){
 
 /* BACK BUTTON HELPERS */
 function goBackInApp(){
- if(history.state?.mcApp){
-  history.back();
- }else{
-  closeDetails();
- }
+ if(history.state?.mcApp)history.back();
+ else closeDetails();
 }
-
 $("backDetails").onclick=goBackInApp;
 $("backGateway").onclick=goBackInApp;
 
@@ -808,39 +957,27 @@ function closeDetails(){
  currentServers=[];
 }
 
-/* RESTORE PREVIOUS MOVIE/PAGE WHEN ANDROID BACK IS PRESSED */
 async function restoreHistoryState(state){
  if(!state?.mcApp||state.page==="home"){
   closeDetails();
   return;
  }
-
  const id=String(state.id||"");
  const type=state.type==="tv"?"tv":"movie";
+ if(!id){closeDetails();return}
 
- if(!id){
-  closeDetails();
-  return;
- }
-
- let movie=currentMovie&&String(currentMovie.id)===id?currentMovie:null;
-
- if(!movie){
-  movie=movieCache.get(type+"-"+id);
- }
+ let movie=currentMovie&&String(currentMovie.id)===id&&mediaType(currentMovie)===type?currentMovie:null;
+ if(!movie)movie=movieCache.get(type+"-"+id);
 
  if(!movie){
   try{
    movie=await api("/"+type+"/"+encodeURIComponent(id));
    movie.media_type=type;
    movieCache.set(type+"-"+id,movie);
-  }catch{
-   closeDetails();
-   return;
-  }
+  }catch{closeDetails();return}
  }
 
- if(!currentMovie||String(currentMovie.id)!==id){
+ if(!currentMovie||String(currentMovie.id)!==id||mediaType(currentMovie)!==type){
   await openMovie(movie,{pushHistory:false});
  }else{
   $("detailsPage").style.display="block";
@@ -849,23 +986,22 @@ async function restoreHistoryState(state){
  }
 
  if(state.page==="gateway"){
-  renderGateway(state.quality||"720p");
+  // Make sure the selected movie's links are ready before showing the gateway.
+  if(!currentLinks||!Object.keys(currentLinks).length)await loadMovieLinks(id);
+  if(String(currentMovie?.id)===id)renderGateway(state.quality||"720p");
  }else{
   $("gatewayPage").style.display="none";
   $("detailsPage").style.display="block";
   document.body.style.overflow="hidden";
  }
 }
-
-window.addEventListener("popstate",event=>{
- restoreHistoryState(event.state);
-});
+window.addEventListener("popstate",event=>restoreHistoryState(event.state));
 
 window.addEventListener("keydown",e=>{
  if(e.key==="Escape"){
-  if($("gatewayPage").style.display==="block"||$("detailsPage").style.display==="block"){
-   goBackInApp();
-  }
+  if($("gatewayPage").style.display==="block"||$("detailsPage").style.display==="block")goBackInApp();
+  if($("sideMenu").classList.contains("open"))closeMenu();
+  document.querySelectorAll(".modal-backdrop.show").forEach(x=>x.classList.remove("show"));
  }
 });
 
@@ -876,8 +1012,10 @@ async function getSavedMovies(ids){
   let found=[...movies,...trendingMovies].find(m=>String(m.id)===String(id));
   if(found){out.push(found);continue}
   try{
-   const m=await api("/movie/"+id);
-   m.media_type="movie";
+   let m;
+   try{m=await api("/movie/"+id)}
+   catch{m=await api("/tv/"+id)}
+   m.media_type=m.first_air_date&&!m.release_date?"tv":"movie";
    out.push(m);
   }catch{}
  }
@@ -924,4 +1062,4 @@ loadTrending();
 loadMovies();
 </script>
 </body>
-  </html>
+</html>
